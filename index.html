@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大島 橙也 | Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; background: rgba(15,15,26,0.85);
+      backdrop-filter: blur(10px); padding: 16px 40px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 100;
+      border-bottom: 1px solid rgba(124,58,237,0.2);
+    }
+    nav .logo { font-weight: bold; font-size: 1.1rem; color: var(--accent2); letter-spacing: 0.05em; }
+    nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.9rem; transition: color 0.2s; }
+    nav a:hover { color: var(--accent2); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 100px 20px 60px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(124,58,237,0.15) 0%, transparent 70%);
+    }
+    .hero .tag {
+      display: inline-block; background: rgba(124,58,237,0.2); color: var(--accent2);
+      border: 1px solid rgba(6,182,212,0.3); border-radius: 50px;
+      padding: 6px 20px; font-size: 0.85rem; margin-bottom: 24px; letter-spacing: 0.1em;
+    }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 800; letter-spacing: -0.02em; }
+    .hero h1 span { background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero .sub { color: var(--muted); font-size: 1.1rem; margin: 16px 0 36px; }
+    .btn {
+      display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; padding: 14px 40px; border-radius: 50px; text-decoration: none;
+      font-weight: bold; font-size: 0.95rem; transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    /* Sections */
+    section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+    section h2 {
+      font-size: 1.8rem; margin-bottom: 40px; text-align: center;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* Skills */
+    .skills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .skill {
+      background: var(--surface); border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 8px; padding: 10px 20px; font-size: 0.9rem; color: var(--accent2);
+    }
+
+    /* Projects */
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .project-card {
+      background: var(--surface); border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 16px; padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+    .project-card .tag2 { font-size: 0.75rem; color: var(--accent2); margin-bottom: 10px; }
+    .project-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+    .project-card p { font-size: 0.88rem; color: var(--muted); }
+
+    /* Contact */
+    .contact-box {
+      background: var(--surface); border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 20px; padding: 48px; text-align: center;
+    }
+    .contact-box p { color: var(--muted); margin-bottom: 28px; }
+    .contact-box a.mail {
+      display: inline-block; color: var(--accent2); font-size: 1.1rem;
+      text-decoration: none; border-bottom: 1px solid rgba(6,182,212,0.4); padding-bottom: 2px;
+    }
+
+    footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="logo">Tonya Oshima</span>
+    <div>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="tag">AI Coding &amp; Original Gaming</div>
+    <h1>大島 <span>橙也</span></h1>
+    <p class="sub">AIを活用したコーディング × オリジナルゲーム開発</p>
+    <a href="#contact" class="btn">お問い合わせ</a>
+  </div>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="skill">AI / LLM Integration</div>
+      <div class="skill">Game Development</div>
+      <div class="skill">Python</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">Prompt Engineering</div>
+      <div class="skill">Unity / Godot</div>
+      <div class="skill">Web Development</div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <div class="project-card">
+        <div class="tag2">AI Coding</div>
+        <h3>AI-Assisted Dev Tool</h3>
+        <p>AIを活用した開発効率化ツール。コード生成・レビュー・リファクタリングを自動化。</p>
+      </div>
+      <div class="project-card">
+        <div class="tag2">Original Gaming</div>
+        <h3>Original Game Project</h3>
+        <p>独自のゲームメカニクスを持つオリジナルゲーム。世界観・ストーリー・実装をすべて自作。</p>
+      </div>
+      <div class="project-card">
+        <div class="tag2">Web</div>
+        <h3>Landing Page Builder</h3>
+        <p>AIを使ったランディングページ自動生成システム。要件入力だけでページを生成。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-box">
+      <p>お仕事のご依頼・コラボレーションはお気軽にどうぞ。</p>
+      <a class="mail" href="mailto:tochatarou@gmail.com">tochatarou@gmail.com</a>
+      <br><br>
+      <a href="mailto:tochatarou@gmail.com" class="btn">メールを送る</a>
+    </div>
+  </section>
+
+  <footer>&copy; 2026 大島 橙也. All Rights Reserved.</footer>
+
+</body>
+</html>
