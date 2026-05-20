@@ -59,6 +59,12 @@
     
     .art-wrapper { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
     .art-wrapper img { width: 100%; height: auto; display: block; }
+    .art-wrapper img.char-focus-right {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: 72% center;
+    }
 
     .art-info h2 { font-size: 1.3rem; margin-bottom: 8px; color: #fff; }
     .art-info p { font-size: 0.9rem; color: var(--muted); }
@@ -95,7 +101,7 @@
       
       <div class="art-card">
         <div class="art-wrapper">
-          <img src="feri.jpg" alt="Your fate is sealed">
+          <img src="feri.jpg" alt="Your fate is sealed" class="char-focus-right">
         </div>
         <div class="art-info">
           <h2>Your fate is sealed</h2>

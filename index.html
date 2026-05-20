@@ -230,6 +230,8 @@
       height: 44px;
       border-radius: 50%;
       object-fit: cover;
+      /* 自撮りは人物が左寄り */
+      object-position: 32% center;
       border: 2px solid rgba(245, 158, 11, 0.4);
     }
 
@@ -256,6 +258,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      /* feri.jpg はキャラが右側 → 見える範囲の中心を右寄りに */
+      object-position: 72% center;
       display: block;
     }
 
@@ -365,6 +369,7 @@
       aspect-ratio: 3 / 4;
       border-radius: 16px;
       object-fit: cover;
+      object-position: 32% center;
       border: 1px solid var(--line);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     }
@@ -508,6 +513,10 @@
       height: 100%;
       object-fit: cover;
       min-height: 180px;
+    }
+
+    .thumb-art img.char-focus-right {
+      object-position: 72% center;
     }
 
     .thumb-ux {
@@ -770,7 +779,7 @@
 
         <article class="project-card reveal">
           <div class="card-thumb thumb-art">
-            <img src="feri.jpg" alt="キャラクターイラスト1">
+            <img src="feri.jpg" alt="キャラクターイラスト1" class="char-focus-right">
             <img src="pel.jpg" alt="キャラクターイラスト2">
           </div>
           <div class="card-body">
