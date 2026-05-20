@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ヴァンピサバイブ | Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      background: #0f0f1a;
+      color: #e2e8f0;
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 40px;
+    }
+    header {
+      width: min(900px, 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-size: 1.35rem;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .back {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back:hover { color: #06b6d4; }
+    .wrap {
+      position: relative;
+      width: min(900px, 100%);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #232326;
+      outline: none;
+      cursor: crosshair;
+    }
+    #overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: rgba(15, 15, 26, 0.88);
+      padding: 24px;
+      gap: 16px;
+    }
+    #overlay.hidden { display: none; }
+    #overlay-title {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 800;
+      color: #f0eaff;
+    }
+    #overlay-msg {
+      white-space: pre-line;
+      color: #94a3b8;
+      line-height: 1.7;
+      max-width: 420px;
+    }
+    #start-btn {
+      margin-top: 8px;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      cursor: pointer;
+    }
+    #start-btn:hover { opacity: 0.9; }
+    .hint {
+      width: min(900px, 100%);
+      margin-top: 14px;
+      color: #64748b;
+      font-size: 0.85rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ヴァンピサバイブ（Web Demo）</h1>
+    <a class="back" href="../index.html">← ポートフォリオへ戻る</a>
+  </header>
+
+  <div class="wrap">
+    <canvas id="game" width="900" height="600" tabindex="0"></canvas>
+    <div id="overlay">
+      <div id="overlay-title">ヴァンピサバイブ</div>
+      <div id="overlay-msg"></div>
+      <button id="start-btn" type="button">サバイブを始める</button>
+    </div>
+  </div>
+
+  <p class="hint">WASD 移動 / 弾は自動 / P または Esc で一時停止<br>Java 版をベースにしたポートフォリオ用ミニデモです</p>
+
+  <script src="game.js"></script>
+</body>
+</html>
