@@ -4,36 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artwork Gallery | Touya Oshima</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --accent: #7c3aed;
-      --accent2: #06b6d4;
-      --bg: #0f0f1a;
-      --surface: #1a1a2e;
-      --text: #e2e8f0;
+      --game: #f59e0b;
+      --art: #e879f9;
+      --bg: #09090f;
+      --surface: #12121c;
+      --text: #f1f5f9;
       --muted: #94a3b8;
+      --line: rgba(255,255,255,0.08);
+      --grad: linear-gradient(135deg, #f59e0b, #e879f9, #38bdf8);
     }
-    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    body { font-family: "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
 
-    /* Nav */
     nav {
-      position: fixed; top: 0; width: 100%; background: rgba(15,15,26,0.85);
-      backdrop-filter: blur(10px); padding: 16px 40px;
+      position: fixed; top: 0; width: 100%; background: rgba(9,9,15,0.85);
+      backdrop-filter: blur(16px); padding: 14px clamp(20px, 4vw, 48px);
       display: flex; justify-content: space-between; align-items: center; z-index: 100;
-      border-bottom: 1px solid rgba(124,58,237,0.2);
+      border-bottom: 1px solid var(--line);
     }
-    nav .logo { font-weight: bold; font-size: 1.1rem; color: var(--accent2); letter-spacing: 0.05em; text-decoration: none; }
-    nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.9rem; transition: color 0.2s; }
-    nav a:hover { color: var(--accent2); }
+    nav .logo { font-family: Outfit, sans-serif; font-weight: 800; font-size: 1rem; color: var(--text); letter-spacing: 0.06em; text-decoration: none; }
+    nav .logo span { color: var(--game); }
+    nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.88rem; font-family: Outfit, sans-serif; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
 
     /* Main Content */
     .gallery-container { padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; min-height: 100vh; }
     
     .header-area { text-align: center; margin-bottom: 60px; }
     .header-area h1 {
-      font-size: 2.5rem; font-weight: 800; margin-bottom: 12px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      font-size: 2.5rem; font-weight: 900; margin-bottom: 12px;
+      background: var(--grad);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .header-area p { color: var(--muted); font-size: 1rem; }
@@ -46,11 +51,11 @@
 
     /* Art Card */
     .art-card {
-      background: var(--surface); border: 1px solid rgba(124,58,237,0.2);
+      background: var(--surface); border: 1px solid var(--line);
       border-radius: 20px; padding: 24px; overflow: hidden;
       transition: border-color 0.2s, transform 0.2s;
     }
-    .art-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+    .art-card:hover { border-color: rgba(232,121,249,0.4); transform: translateY(-4px); }
     
     .art-wrapper { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
     .art-wrapper img { width: 100%; height: auto; display: block; }
@@ -65,7 +70,7 @@
       border: 1px solid rgba(255,255,255,0.2); padding: 12px 32px; border-radius: 50px;
       text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.2s;
     }
-    .btn-back:hover { background: rgba(255,255,255,0.05); border-color: var(--accent2); color: var(--accent2); }
+    .btn-back:hover { background: rgba(255,255,255,0.05); border-color: var(--art); color: var(--art); }
 
     footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 60px; }
   </style>
@@ -73,7 +78,7 @@
 <body>
 
   <nav>
-    <a href="index.html" class="logo">Touya Oshima</a>
+    <a href="index.html" class="logo">TOUYA <span>OSHIMA</span></a>
     <div>
       <a href="index.html">Top</a>
       <a href="index.html#projects">Projects</a>

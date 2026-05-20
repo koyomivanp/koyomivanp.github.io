@@ -3,195 +3,829 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大島 橙也 | Portfolio</title>
+  <title>大島 橙也 | Game Dev × Visual</title>
+  <meta name="description" content="大島橙也 — ゲーム制作とビジュアルを一人で届けるクリエイター。Java / Unity / Canvas デモ公開中。">
+  <meta property="og:title" content="大島 橙也 | Portfolio">
+  <meta property="og:description" content="Game Dev × Character Art — 作る・描く・考える">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --accent: #7c3aed;
-      --accent2: #06b6d4;
-      --bg: #0f0f1a;
-      --surface: #1a1a2e;
-      --text: #e2e8f0;
+      --bg: #09090f;
+      --surface: #12121c;
+      --surface2: #1a1a28;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #f1f5f9;
       --muted: #94a3b8;
+      --game: #f59e0b;
+      --art: #e879f9;
+      --think: #38bdf8;
+      --grad: linear-gradient(135deg, #f59e0b 0%, #e879f9 55%, #38bdf8 100%);
+      --radius: 20px;
+      --font: "Noto Sans JP", "Segoe UI", sans-serif;
+      --font-en: "Outfit", "Noto Sans JP", sans-serif;
     }
-    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(245, 158, 11, 0.07), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 85% 20%, rgba(232, 121, 249, 0.08), transparent 50%),
+        radial-gradient(ellipse 50% 30% at 50% 100%, rgba(56, 189, 248, 0.05), transparent 45%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { position: relative; z-index: 1; }
 
     /* Nav */
     nav {
-      position: fixed; top: 0; width: 100%; background: rgba(15,15,26,0.85);
-      backdrop-filter: blur(10px); padding: 16px 40px;
-      display: flex; justify-content: space-between; align-items: center; z-index: 100;
-      border-bottom: 1px solid rgba(124,58,237,0.2);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 14px clamp(20px, 4vw, 48px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 200;
+      background: rgba(9, 9, 15, 0.72);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
     }
-    nav .logo { font-weight: bold; font-size: 1.1rem; color: var(--accent2); letter-spacing: 0.05em; }
-    nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.9rem; transition: color 0.2s; }
-    nav a:hover { color: var(--accent2); }
+
+    nav .logo {
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav .logo span { color: var(--game); }
+
+    nav .links { display: flex; gap: clamp(16px, 3vw, 32px); align-items: center; }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-family: var(--font-en);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    nav .nav-cta {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: var(--game) !important;
+      font-weight: 600;
+    }
+
+    nav .nav-cta:hover {
+      background: rgba(245, 158, 11, 0.1);
+      color: #fcd34d !important;
+    }
 
     /* Hero */
     .hero {
       min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 100px 20px 60px;
-      background: radial-gradient(ellipse at 50% 40%, rgba(124,58,237,0.15) 0%, transparent 70%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 64px);
+      align-items: center;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 120px clamp(20px, 4vw, 48px) 80px;
     }
-    .hero .tag {
-      display: inline-block; background: rgba(124,58,237,0.2); color: var(--accent2);
-      border: 1px solid rgba(6,182,212,0.3); border-radius: 50px;
-      padding: 6px 20px; font-size: 0.85rem; margin-bottom: 24px; letter-spacing: 0.1em;
+
+    .hero-copy { max-width: 520px; }
+
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-en);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--game);
+      margin-bottom: 20px;
     }
-    .hero h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 800; letter-spacing: -0.02em; }
-    .hero h1 span { background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero .sub { color: var(--muted); font-size: 1.1rem; margin: 16px 0 36px; }
+
+    .hero .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--grad);
+      border-radius: 2px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 .accent {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .lead {
+      color: var(--muted);
+      font-size: clamp(0.95rem, 2vw, 1.08rem);
+      margin-bottom: 28px;
+      max-width: 440px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
     .btn {
-      display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; padding: 14px 40px; border-radius: 50px; text-decoration: none;
-      font-weight: bold; font-size: 0.95rem; transition: opacity 0.2s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
     }
-    .btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: var(--grad);
+      color: #0b0b10;
+      box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25);
+    }
+
+    .btn-primary:hover { box-shadow: 0 12px 40px rgba(232, 121, 249, 0.3); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .hero-profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px 12px 12px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .hero-profile img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .hero-profile .name { font-weight: 700; font-size: 0.9rem; }
+    .hero-profile .role { font-size: 0.78rem; color: var(--muted); }
+
+    /* Hero visual */
+    .hero-visual { position: relative; }
+
+    .art-frame {
+      position: relative;
+      border-radius: calc(var(--radius) + 4px);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      aspect-ratio: 4 / 5;
+      max-height: min(72vh, 620px);
+      margin-left: auto;
+    }
+
+    .art-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .art-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(9, 9, 15, 0.75) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .art-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 2;
+    }
+
+    .art-caption .label {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--art);
+      margin-bottom: 4px;
+    }
+
+    .art-caption p {
+      font-size: 0.88rem;
+      color: rgba(241, 245, 249, 0.85);
+    }
+
+    .float-badge {
+      position: absolute;
+      top: -12px;
+      right: -8px;
+      background: var(--surface2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-family: var(--font-en);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--game);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
 
     /* Sections */
-    section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
-    section h2 {
-      font-size: 1.8rem; margin-bottom: 40px; text-align: center;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 80px clamp(20px, 4vw, 48px);
     }
 
-    /* Skills */
-    .skills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-    .skill {
-      background: var(--surface); border: 1px solid rgba(124,58,237,0.3);
-      border-radius: 8px; padding: 10px 20px; font-size: 0.9rem; color: var(--accent2);
+    .section-head {
+      margin-bottom: 48px;
+    }
+
+    .section-head .label {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(24px, 4vw, 48px);
+      align-items: start;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(24px, 4vw, 40px);
+    }
+
+    .about-photo {
+      width: clamp(120px, 20vw, 160px);
+      aspect-ratio: 3 / 4;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .about-text h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    /* Pillars */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .pillar {
+      background: var(--surface2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .pillar .icon {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .pillar h4 {
+      font-family: var(--font-en);
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .pillar.build h4 { color: var(--game); }
+    .pillar.draw h4 { color: var(--art); }
+    .pillar.think h4 { color: var(--think); }
+
+    .pillar p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     /* Projects */
-    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
     .project-card {
-      background: var(--surface); border: 1px solid rgba(124,58,237,0.2);
-      border-radius: 16px; padding: 28px 24px;
-      display: flex; flex-direction: column; justify-content: space-between;
-      transition: border-color 0.2s, transform 0.2s;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
     }
-    .project-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
-    .project-card .card-content { flex-grow: 1; }
-    .project-card .tag2 { font-size: 0.75rem; color: var(--accent2); margin-bottom: 10px; font-weight: bold; }
-    .project-card h3 { font-size: 1.1rem; margin-bottom: 12px; color: #fff; }
-    .project-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
-    
-    /* Image Placeholder for Artwork Card */
-    .art-preview {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     }
-    .art-img {
-      width: 100%; aspect-ratio: 1; background: rgba(255,255,255,0.05); 
-      border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
-      display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--muted);
+
+    .project-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .card-thumb {
+      min-height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card.featured .card-thumb { min-height: 260px; }
+
+    .thumb-game {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0, 220, 80, 0.15) 0%, transparent 40%),
+        repeating-linear-gradient(0deg, transparent, transparent 47px, rgba(255,255,255,0.03) 47px, rgba(255,255,255,0.03) 48px),
+        repeating-linear-gradient(90deg, transparent, transparent 47px, rgba(255,255,255,0.03) 47px, rgba(255,255,255,0.03) 48px),
+        #232326;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-preview {
+      width: 120px;
+      height: 120px;
+      position: relative;
+    }
+
+    .game-preview .player {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 28px; height: 28px;
+      margin: -14px 0 0 -14px;
+      background: #00dc50;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0, 220, 80, 0.5);
+    }
+
+    .game-preview .enemy {
+      position: absolute;
+      width: 18px; height: 18px;
+      background: #e63c46;
+      border-radius: 50%;
+    }
+
+    .game-preview .enemy:nth-child(2) { top: 10%; left: 20%; }
+    .game-preview .enemy:nth-child(3) { top: 15%; right: 15%; }
+    .game-preview .enemy:nth-child(4) { bottom: 20%; left: 10%; }
+    .game-preview .enemy:nth-child(5) { bottom: 15%; right: 20%; }
+    .game-preview .enemy:nth-child(6) { top: 40%; left: 5%; }
+
+    .thumb-art {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .thumb-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 180px;
+    }
+
+    .thumb-ux {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .thumb-ux .chart {
+      width: 80%;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 80px;
+    }
+
+    .thumb-ux .bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--think), rgba(56, 189, 248, 0.3));
+      border-radius: 4px 4px 0 0;
+    }
+
+    .thumb-ux .bar:nth-child(1) { height: 45%; }
+    .thumb-ux .bar:nth-child(2) { height: 70%; }
+    .thumb-ux .bar:nth-child(3) { height: 55%; }
+    .thumb-ux .bar:nth-child(4) { height: 90%; }
+
+    .thumb-dev {
+      background: linear-gradient(135deg, #1a1030, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      opacity: 0.7;
+    }
+
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .tag.game { background: rgba(245, 158, 11, 0.15); color: var(--game); }
+    .tag.art { background: rgba(232, 121, 249, 0.15); color: var(--art); }
+    .tag.think { background: rgba(56, 189, 248, 0.15); color: var(--think); }
+    .tag.dev { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+
+    .card-body h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .card-body p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .card-body .btn {
+      align-self: flex-start;
+      padding: 10px 22px;
+      font-size: 0.85rem;
     }
 
     /* Contact */
     .contact-box {
-      background: var(--surface); border: 1px solid rgba(124,58,237,0.3);
-      border-radius: 20px; padding: 48px; text-align: center;
-    }
-    .contact-box p { color: var(--muted); margin-bottom: 28px; }
-    .contact-box a.mail {
-      display: inline-block; color: var(--accent2); font-size: 1.1rem;
-      text-decoration: none; border-bottom: 1px solid rgba(6,182,212,0.4); padding-bottom: 2px;
-      margin-bottom: 24px;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(40px, 6vw, 64px) clamp(24px, 4vw, 48px);
     }
 
-    footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .contact-box p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+
+    .contact-box .mail {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 1.15rem;
+      color: var(--think);
+      text-decoration: none;
+      margin-bottom: 28px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+      padding-bottom: 2px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 20px 48px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-family: var(--font-en);
+      border-top: 1px solid var(--line);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 100px;
+        min-height: auto;
+      }
+
+      .hero-visual { order: -1; }
+
+      .art-frame {
+        max-height: 420px;
+        margin: 0 auto;
+        max-width: 360px;
+      }
+
+      .float-badge { right: 8px; top: 8px; }
+
+      .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .about-photo { margin: 0 auto; }
+
+      .pillars { grid-template-columns: 1fr; }
+
+      .projects { grid-template-columns: 1fr; }
+
+      .project-card.featured { grid-template-columns: 1fr; }
+
+      nav .links a:not(.nav-cta) { display: none; }
+    }
   </style>
 </head>
 <body>
+  <div class="noise"></div>
+  <div class="wrap">
 
-  <nav>
-    <span class="logo">Touya Oshima</span>
-    <div>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
+    <nav>
+      <a href="#" class="logo">TOUYA <span>OSHIMA</span></a>
+      <div class="links">
+        <a href="#about">About</a>
+        <a href="#projects">Works</a>
+        <a href="#contact">Contact</a>
+        <a href="vampiresurvivors/index.html" class="nav-cta">Play Demo</a>
+      </div>
+    </nav>
 
-  <div class="hero">
-    <div class="tag">AI Coding &amp; Game Development</div>
-    <h1>大島 <span>橙也</span></h1>
-    <p class="sub">AIを活用した効率的コーディング × 独自のゲームメカニクス開発</p>
-    <a href="#projects" class="btn">実績を見る</a>
+    <header class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Game Dev × Visual</div>
+        <h1>ゲームを作る。<br>必要な<span class="accent">絵</span>も描く。</h1>
+        <p class="lead">大島橙也 — プログラミングとビジュアルを一人で回せるクリエイター。小さなゲームからUIまで、世界観を途切れさせず届けます。</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">制作実績を見る</a>
+          <a href="vampiresurvivors/index.html" class="btn btn-ghost">Web デモを遊ぶ</a>
+        </div>
+        <div class="hero-profile">
+          <img src="profile.jpg" alt="大島橙也">
+          <div>
+            <div class="name">大島 橙也 / Touya Oshima</div>
+            <div class="role">Student · Game &amp; Visual Creator</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="float-badge">Original Character</div>
+        <div class="art-frame">
+          <img src="feri.jpg" alt="オリジナルキャラクターイラスト">
+          <div class="art-caption">
+            <div class="label">Character Art</div>
+            <p>ゲーム用キャラクターのデザイン・塗り</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="section-head reveal">
+        <div class="label">About</div>
+        <h2>作る・描く・考える</h2>
+      </div>
+      <div class="about-grid reveal">
+        <img class="about-photo" src="profile.jpg" alt="大島橙也 プロフィール写真">
+        <div class="about-text">
+          <h3>はじめまして、大島橙也です。</h3>
+          <p>Unity や Java を使ったゲーム制作を中心に活動しています。プログラムだけでなく、キャラクターの見た目やUIなど「必要なビジュアル」も自分で用意できるのが強みです。</p>
+          <p>AI（Cursor 等）を開発の相棒にしながら、試作から公開まで素早く回すスタイルで制作しています。完璧な絵師ではありませんが、ゲームに必要なクオリティのビジュアルは自分で仕上げられるところまで伸ばしています。</p>
+          <div class="pillars">
+            <div class="pillar build">
+              <div class="icon">⚙</div>
+              <h4>Build</h4>
+              <p>Unity / Java / Canvas。ゲームロジックとプロトタイプ制作。</p>
+            </div>
+            <div class="pillar draw">
+              <div class="icon">✦</div>
+              <h4>Draw</h4>
+              <p>キャラデザ・UI・ゲーム用アセット。世界観の統一。</p>
+            </div>
+            <div class="pillar think">
+              <div class="icon">◈</div>
+              <h4>Think</h4>
+              <p>UXリサーチ・企画。ユーザー視点での設計。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head reveal">
+        <div class="label">Works</div>
+        <h2>制作実績</h2>
+      </div>
+
+      <div class="projects">
+        <article class="project-card featured reveal">
+          <div class="card-thumb thumb-game">
+            <div class="game-preview">
+              <div class="player"></div>
+              <div class="enemy"></div>
+              <div class="enemy"></div>
+              <div class="enemy"></div>
+              <div class="enemy"></div>
+              <div class="enemy"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="tag game">Game · Playable</span>
+            <h3>サバイバル系 2D アクション</h3>
+            <p>大量の敵を自動射撃でなぎ倒すサバイバルアクション。Java（Swing）で制作し、ポートフォリオ用に Canvas 版のブラウザデモも公開しています。ブラウザですぐ遊べます。</p>
+            <a href="vampiresurvivors/index.html" class="btn btn-primary">Web デモをプレイ →</a>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-dev">🃏</div>
+          <div class="card-body">
+            <span class="tag dev">Unity · WIP</span>
+            <h3>デッキ構築型ローグライクパズル</h3>
+            <p>カードバトルとパズルを融合。AI との協調開発で戦闘ロジックのプロトタイプを高速検証中。UI・グラフィックも自作予定。</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-art">
+            <img src="feri.jpg" alt="キャラクターイラスト1">
+            <img src="pel.jpg" alt="キャラクターイラスト2">
+          </div>
+          <div class="card-body">
+            <span class="tag art">Visual</span>
+            <h3>キャラクター・2D イラスト</h3>
+            <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。</p>
+            <a href="artwork.html" class="btn btn-ghost">ギャラリーを見る →</a>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-ux">
+            <div class="chart">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="tag think">UX · Research</span>
+            <h3>次世代ペンケース 製品企画</h3>
+            <p>38名への調査から潜在ニーズを特定。容量・質感などユーザー視点のデータをもとに、機能美を追求したプロダクト企画を策定。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head reveal">
+        <div class="label">Contact</div>
+        <h2>お問い合わせ</h2>
+      </div>
+      <div class="contact-box reveal">
+        <p>制作のご相談、コラボレーション、ポートフォリオに関するお問い合わせはこちらまで。</p>
+        <a class="mail" href="mailto:tochatarou@gmail.com">tochatarou@gmail.com</a>
+        <br>
+        <a href="mailto:tochatarou@gmail.com" class="btn btn-primary">メールを送る</a>
+      </div>
+    </section>
+
+    <footer>&copy; 2026 Touya Oshima</footer>
   </div>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <div class="skills">
-      <div class="skill">Unity (C#)</div>
-      <div class="skill">Java</div>
-      <div class="skill">Python</div>
-      <div class="skill">AI Coding (Cursor / LLM)</div>
-      <div class="skill">Prompt Engineering</div>
-      <div class="skill">Digital Art (Character Design)</div>
-      <div class="skill">UX Research &amp; Marketing</div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>Projects &amp; Works</h2>
-    <div class="projects">
-      
-      <div class="project-card">
-        <div class="card-content">
-          <div class="tag2">Unity / C# (開発中)</div>
-          <h3>デッキ構築型ローグライクパズル</h3>
-          <p>カードバトルとパズル要素を融合させたオリジナルゲーム。AI（Cursor）との協調ワークフローにより、複雑なカードの発動トリガーや戦闘ロジックのプロトタイプ検証をハイスピードで進めています。UIデザインやグラフィックも自作予定。</p>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-content">
-          <div class="tag2">Java / HTML Canvas</div>
-          <h3>サバイバル系2Dアクションゲーム</h3>
-          <p>大量に押し寄せる敵をなぎ倒す、爽快感を重視した2Dアクションゲーム。Java（Swing）で制作し、ポートフォリオ用に Canvas 版のミニデモも公開しています。</p>
-          <a href="vampiresurvivors/index.html" class="btn" style="margin-top: 16px; text-align: center; display: block;">Web デモをプレイ</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-content">
-          <div class="tag2">Digital Art / キャラデザ</div>
-          <h3>グラフィック・2Dイラスト制作</h3>
-          <p>キャラクターデザイン、および身体の立体感を意識した高コントラストな陰影表現（セルシェーディング）の研究。独自のタイポグラフィ配置やUI要素の融合など、ゲーム開発におけるアセット制作の基礎力として活かしています。</p>
-          
-          <div class="art-preview" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0;">
-            <img src="feri.jpg" alt="Your fate is sealed" style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-            <img src="pel.jpg" alt="MRN Police Girl" style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-          </div>
-
-          <a href="artwork.html" class="btn" style="margin-top: auto; text-align: center; display: block;">イラストギャラリーを見る</a>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="card-content">
-          <div class="tag2">UX Research / Marketing</div>
-          <h3>次世代ペンケースの製品企画書</h3>
-          <p>学生38名のリアルな声をベースにした『筆箱についての意識調査』のデータ分析を実践。容量への不満や好まれる質感（つるつる感）などの潜在ニーズを特定し、UX視点からロジカルに機能美を追求したプロダクト企画を策定しました。</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <div class="contact-box">
-      <p>制作に関するお問い合わせ、またはコラボレーションのご相談はこちらまで。</p>
-      <a class="mail" href="mailto:tochatarou@gmail.com">tochatarou@gmail.com</a>
-      <br>
-      <a href="mailto:tochatarou@gmail.com" class="btn">メールを作成する</a>
-    </div>
-  </section>
-
-  <footer>&copy; 2026 Touya Oshima. All Rights Reserved.</footer>
-
+  <script>
+    const reveals = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    reveals.forEach((el) => io.observe(el));
+  </script>
 </body>
 </html>
