@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artwork Gallery | Touya Oshima</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; background: rgba(15,15,26,0.85);
+      backdrop-filter: blur(10px); padding: 16px 40px;
+      display: flex; justify-content: space-between; align-items: center; z-index: 100;
+      border-bottom: 1px solid rgba(124,58,237,0.2);
+    }
+    nav .logo { font-weight: bold; font-size: 1.1rem; color: var(--accent2); letter-spacing: 0.05em; text-decoration: none; }
+    nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.9rem; transition: color 0.2s; }
+    nav a:hover { color: var(--accent2); }
+
+    /* Main Content */
+    .gallery-container { padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; min-height: 100vh; }
+    
+    .header-area { text-align: center; margin-bottom: 60px; }
+    .header-area h1 {
+      font-size: 2.5rem; font-weight: 800; margin-bottom: 12px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-area p { color: var(--muted); font-size: 1rem; }
+
+    /* Grid Layout */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* Art Card */
+    .art-card {
+      background: var(--surface); border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 20px; padding: 24px; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .art-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+    
+    .art-wrapper { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+    .art-wrapper img { width: 100%; height: auto; display: block; }
+
+    .art-info h2 { font-size: 1.3rem; margin-bottom: 8px; color: #fff; }
+    .art-info p { font-size: 0.9rem; color: var(--muted); }
+
+    /* Button */
+    .back-box { text-align: center; margin-top: 60px; }
+    .btn-back {
+      display: inline-block; background: transparent; color: var(--text);
+      border: 1px solid rgba(255,255,255,0.2); padding: 12px 32px; border-radius: 50px;
+      text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.2s;
+    }
+    .btn-back:hover { background: rgba(255,255,255,0.05); border-color: var(--accent2); color: var(--accent2); }
+
+    footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 60px; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Touya Oshima</a>
+    <div>
+      <a href="index.html">Top</a>
+      <a href="index.html#projects">Projects</a>
+    </div>
+  </nav>
+
+  <main class="gallery-container">
+    <div class="header-area">
+      <h1>Artwork Gallery</h1>
+      <p>ゲームのグラフィック・アセット開発を見据えた2Dデジタルイラストレーション</p>
+    </div>
+
+    <div class="gallery-grid">
+      
+      <div class="art-card">
+        <div class="art-wrapper">
+          <img src="feri.jpg" alt="Your fate is sealed">
+        </div>
+        <div class="art-info">
+          <h2>Your fate is sealed</h2>
+          <p>高コントラストなセルシェーディングを用いたキャラクターデザイン。紫を基調としたダークな世界観と、構図を引き締める独自のグラフィティタイポグラフィの融合を意識して制作しました。</p>
+        </div>
+      </div>
+
+      <div class="art-card">
+        <div class="art-wrapper">
+          <img src="pel.jpg" alt="MRN Police Girl">
+        </div>
+        <div class="art-info">
+          <h2>MRN Police Girl</h2>
+          <p>鮮やかな色彩設計と、制服や帽子の質感表現に拘ったイラスト。キャラクターの個性を強調するため、瞳の奥に施した精緻な時計盤のギミックデザインが特徴です。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="back-box">
+      <a href="index.html" class="btn-back">← トップページに戻る</a>
+    </div>
+  </main>
+
+  <footer>&copy; 2026 Touya Oshima. All Rights Reserved.</footer>
+
+</body>
+</html>
