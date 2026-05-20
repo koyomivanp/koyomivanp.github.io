@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大島 橙也 | Portfolio</title>
+  <title>大島 👑也 | Portfolio</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -50,7 +50,7 @@
     .btn:hover { opacity: 0.85; transform: translateY(-2px); }
 
     /* Sections */
-    section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+    section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; }
     section h2 {
       font-size: 1.8rem; margin-bottom: 40px; text-align: center;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
@@ -65,16 +65,28 @@
     }
 
     /* Projects */
-    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
     .project-card {
       background: var(--surface); border: 1px solid rgba(124,58,237,0.2);
       border-radius: 16px; padding: 28px 24px;
+      display: flex; flex-direction: column; justify-content: space-between;
       transition: border-color 0.2s, transform 0.2s;
     }
     .project-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
-    .project-card .tag2 { font-size: 0.75rem; color: var(--accent2); margin-bottom: 10px; }
-    .project-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
-    .project-card p { font-size: 0.88rem; color: var(--muted); }
+    .project-card .card-content { flex-grow: 1; }
+    .project-card .tag2 { font-size: 0.75rem; color: var(--accent2); margin-bottom: 10px; font-weight: bold; }
+    .project-card h3 { font-size: 1.1rem; margin-bottom: 12px; color: #fff; }
+    .project-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
+    
+    /* Image Placeholder for Artwork Card */
+    .art-preview {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px;
+    }
+    .art-img {
+      width: 100%; aspect-ratio: 1; background: rgba(255,255,255,0.05); 
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--muted);
+    }
 
     /* Contact */
     .contact-box {
@@ -85,6 +97,7 @@
     .contact-box a.mail {
       display: inline-block; color: var(--accent2); font-size: 1.1rem;
       text-decoration: none; border-bottom: 1px solid rgba(6,182,212,0.4); padding-bottom: 2px;
+      margin-bottom: 24px;
     }
 
     footer { text-align: center; padding: 32px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -93,7 +106,7 @@
 <body>
 
   <nav>
-    <span class="logo">Tonya Oshima</span>
+    <span class="logo">Touya Oshima</span>
     <div>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
@@ -101,62 +114,81 @@
     </div>
   </nav>
 
-  <!-- Hero -->
   <div class="hero">
-    <div class="tag">AI Coding &amp; Original Gaming</div>
-    <h1>大島 <span>橙也</span></h1>
-    <p class="sub">AIを活用したコーディング × オリジナルゲーム開発</p>
-    <a href="#contact" class="btn">お問い合わせ</a>
+    <div class="tag">AI Coding &amp; Game Development</div>
+    <h1>大島 <span>👑也</span></h1>
+    <p class="sub">AIを活用した効率的コーディング × 独自のゲームメカニクス開発</p>
+    <a href="#projects" class="btn">実績を見る</a>
   </div>
 
-  <!-- Skills -->
   <section id="skills">
     <h2>Skills</h2>
     <div class="skills">
-      <div class="skill">AI / LLM Integration</div>
-      <div class="skill">Game Development</div>
+      <div class="skill">Unity (C#)</div>
+      <div class="skill">Java</div>
       <div class="skill">Python</div>
-      <div class="skill">JavaScript</div>
+      <div class="skill">AI Coding (Cursor / LLM)</div>
       <div class="skill">Prompt Engineering</div>
-      <div class="skill">Unity / Godot</div>
-      <div class="skill">Web Development</div>
+      <div class="skill">Digital Art (Character Design)</div>
+      <div class="skill">UX Research &amp; Marketing</div>
     </div>
   </section>
 
-  <!-- Projects -->
   <section id="projects">
-    <h2>Projects</h2>
+    <h2>Projects &amp; Works</h2>
     <div class="projects">
+      
       <div class="project-card">
-        <div class="tag2">AI Coding</div>
-        <h3>AI-Assisted Dev Tool</h3>
-        <p>AIを活用した開発効率化ツール。コード生成・レビュー・リファクタリングを自動化。</p>
+        <div class="card-content">
+          <div class="tag2">Unity / C# (開発中)</div>
+          <h3>デッキ構築型ローグライクパズル</h3>
+          <p>カードバトルとパズル要素を融合させたオリジナルゲーム。AI（Cursor）との協調ワークフローにより、複雑なカードの発動トリガーや戦闘ロジックのプロトタイプ検証をハイスピードで進めています。UIデザインやグラフィックも自作予定。</p>
+        </div>
       </div>
+
       <div class="project-card">
-        <div class="tag2">Original Gaming</div>
-        <h3>Original Game Project</h3>
-        <p>独自のゲームメカニクスを持つオリジナルゲーム。世界観・ストーリー・実装をすべて自作。</p>
+        <div class="card-content">
+          <div class="tag2">Unity / C# (制作実績)</div>
+          <h3>サバイバル系2Dアクションゲーム</h3>
+          <p>大量に押し寄せる敵をなぎ倒す、爽快感を重視した2Dアクションゲーム。オブジェクトプール等の最適化パターンを取り入れ、大量のオブジェクト生成が起きてもフレームレートを維持する技術的な工夫を施しました。</p>
+        </div>
       </div>
+
       <div class="project-card">
-        <div class="tag2">Web</div>
-        <h3>Landing Page Builder</h3>
-        <p>AIを使ったランディングページ自動生成システム。要件入力だけでページを生成。</p>
+        <div class="card-content">
+          <div class="tag2">Digital Art / キャラデザ</div>
+          <h3>グラフィック・2Dイラスト制作</h3>
+          <p>解剖学的なプロポーションや、立体感を意識したアニメ調の陰影表現（シェーディング）の研究。ゲーム開発におけるアセット制作や、視覚的なUI/UXデザインの基礎力として活かしています。</p>
+          <div class="art-preview">
+            <div class="art-img">Art 1</div>
+            <div class="art-img">Art 2</div>
+            <div class="art-img">Art 3</div>
+          </div>
+        </div>
       </div>
+
+      <div class="project-card">
+        <div class="card-content">
+          <div class="tag2">UX Research / Marketing</div>
+          <h3>次世代ペンケースの製品企画書</h3>
+          <p>学生38名のリアルな声をベースにした『筆箱についての意識調査』のデータ分析を実践。容量への不満や好まれる質感（つるつる感）などの潜在ニーズを特定し、UX視点からロジカルに機能美を追求したプロダクト企画を策定しました。</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <h2>Contact</h2>
     <div class="contact-box">
-      <p>お仕事のご依頼・コラボレーションはお気軽にどうぞ。</p>
+      <p>制作に関するお問い合わせ、またはコラボレーションのご相談はこちらまで。</p>
       <a class="mail" href="mailto:tochatarou@gmail.com">tochatarou@gmail.com</a>
-      <br><br>
-      <a href="mailto:tochatarou@gmail.com" class="btn">メールを送る</a>
+      <br>
+      <a href="mailto:tochatarou@gmail.com" class="btn">メールを作成する</a>
     </div>
   </section>
 
-  <footer>&copy; 2026 大島 橙也. All Rights Reserved.</footer>
+  <footer>&copy; 2026 Touya Oshima. All Rights Reserved.</footer>
 
 </body>
 </html>
