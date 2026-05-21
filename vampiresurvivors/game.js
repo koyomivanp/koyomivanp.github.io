@@ -50,12 +50,6 @@
   const bullets = [];
   const gems = [];
 
-  const UPGRADES = [
-    { id: "atk", label: "攻撃力 UP (+1)" },
-    { id: "spd", label: "移動速度 UP" },
-    { id: "multi", label: "弾数 UP (+1)" },
-  ];
-
   function resetGame() {
     elapsed = 0;
     fireCd = 0;
@@ -143,14 +137,9 @@
       xp -= xpNext;
       level++;
       xpNext += 4;
-      player.maxHp += 2;
-      player.hp = Math.min(player.maxHp, player.hp + 2);
       score += 75 + level * 12;
-      const pick = UPGRADES[(Math.random() * UPGRADES.length) | 0];
-      if (pick.id === "atk") attackPower++;
-      else if (pick.id === "spd") moveMult += 0.15;
-      else bulletsPerShot++;
-      levelUpBanner = "LEVEL UP!  " + pick.label;
+      bulletsPerShot += 1;
+      levelUpBanner = `LEVEL UP!  弾数 UP（${bulletsPerShot} 発）`;
       levelUpTimer = 2.5;
     }
   }
