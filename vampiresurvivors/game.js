@@ -244,28 +244,41 @@
     }
   }
 
+  /** ワールド座標 → 画面座標（カメラは常にプレイヤー中心）。 */
   function worldToScreen(wx, wy) {
-    return [W / 2 + wx, H / 2 + wy];
+    return [W / 2 + (wx - player.x), H / 2 + (wy - player.y)];
   }
 
-  function drawGrid(camX, camY) {
+  function drawGrid() {
     ctx.strokeStyle = "rgba(255,255,255,0.04)";
     ctx.lineWidth = 1;
     const grid = 48;
-    const ox = (-camX % grid + grid) % grid;
-    const oy = (-camY % grid + grid) % grid;
-    for (let x = ox; x < W; x += grid) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    const baseX = W / 2 - player.x;
+    const baseY = H / 2 - player.y;
+    const k0 = Math.floor(-baseX / grid);
+    const k1 = Math.ceil((W - baseX) / grid);
+    for (let k = k0; k <= k1; k++) {
+      const x = baseX + k * grid;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
     }
-    for (let y = oy; y < H; y += grid) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    const j0 = Math.floor(-baseY / grid);
+    const j1 = Math.ceil((H - baseY) / grid);
+    for (let j = j0; j <= j1; j++) {
+      const y = baseY + j * grid;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
     }
   }
 
   function draw() {
     ctx.fillStyle = "#232326";
     ctx.fillRect(0, 0, W, H);
-    drawGrid(player.x, player.y);
+    drawGrid();
 
     for (const g of gems) {
       const [sx, sy] = worldToScreen(g.x, g.y);
