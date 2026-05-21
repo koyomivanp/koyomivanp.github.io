@@ -258,7 +258,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* feri.jpg はキャラが右側 → 見える範囲の中心を右寄りに */
+      /* feri.jpg はキャラが右側 → 見える範囲の中心をさらに右寄りに */
       object-position: 88% center;
       display: block;
     }
@@ -546,13 +546,13 @@
     .thumb-ux .bar:nth-child(3) { height: 55%; }
     .thumb-ux .bar:nth-child(4) { height: 90%; }
 
-    .thumb-dev {
-      background: linear-gradient(135deg, #1a1030, #0f172a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      opacity: 0.7;
+    .thumb-screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      min-height: 180px;
+      display: block;
     }
 
     .card-body {
@@ -769,11 +769,13 @@
         </article>
 
         <article class="project-card reveal">
-          <div class="card-thumb thumb-dev">🃏</div>
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/puzzle-game-screenshot.jpg" alt="デッキ構築型ローグライクパズル — 開発中のプレイ画面">
+          </div>
           <div class="card-body">
             <span class="tag dev">Unity · WIP</span>
             <h3>デッキ構築型ローグライクパズル</h3>
-            <p>カードバトルとパズルを融合。AI との協調開発で戦闘ロジックのプロトタイプを高速検証中。UI・グラフィックも自作予定。</p>
+            <p>カードバトルとパズルを融合したオリジナルゲーム。錬金術風のUIとキャラクターを組み込み、AI（Cursor）と協調しながら戦闘・パズルロジックを検証中。</p>
           </div>
         </article>
 
