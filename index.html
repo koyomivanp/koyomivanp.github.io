@@ -546,78 +546,6 @@
     .thumb-ux .bar:nth-child(3) { height: 55%; }
     .thumb-ux .bar:nth-child(4) { height: 90%; }
 
-    .thumb-puzzle-8 {
-      background: #1a1a24;
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 3px;
-      padding: 16px;
-      align-content: center;
-    }
-
-    .thumb-puzzle-8 span {
-      aspect-ratio: 1;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-    }
-
-    .thumb-puzzle-8 .c1 { background: #f59e0b; }
-    .thumb-puzzle-8 .c2 { background: #e879f9; }
-    .thumb-puzzle-8 .c3 { background: #38bdf8; }
-    .thumb-puzzle-8 .c4 { background: #22c55e; }
-    .thumb-puzzle-8 .c0 { background: rgba(255, 255, 255, 0.06); }
-
-    .thumb-othello {
-      background: linear-gradient(160deg, #2d1f14, #1a120c);
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 4px;
-      padding: 20px;
-      align-content: center;
-    }
-
-    .thumb-othello span {
-      aspect-ratio: 1;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: clamp(0.45rem, 2vw, 0.62rem);
-      font-weight: 700;
-      color: #fef3c7;
-      background: rgba(120, 80, 40, 0.55);
-      border: 1px solid rgba(255, 220, 160, 0.2);
-    }
-
-    .thumb-othello .p1 { background: rgba(220, 60, 60, 0.45); }
-    .thumb-othello .p2 { background: rgba(60, 120, 220, 0.45); }
-
-    .thumb-kiewado {
-      background: linear-gradient(145deg, #3d2a1a, #261a10);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      padding: 28px 36px;
-      align-content: center;
-      justify-items: center;
-    }
-
-    .thumb-kiewado span {
-      width: 100%;
-      max-width: 72px;
-      aspect-ratio: 1;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #fef3c7;
-      background: linear-gradient(180deg, #6b4a2e 0%, #4a3220 100%);
-      border: 2px solid rgba(255, 220, 160, 0.25);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-    }
-
     .thumb-screenshot img {
       width: 100%;
       height: 100%;
@@ -625,6 +553,18 @@
       object-position: center center;
       min-height: 180px;
       display: block;
+    }
+
+    .thumb-screenshot img.shot-moji-othello {
+      object-position: 42% 38%;
+    }
+
+    .thumb-screenshot img.shot-kiewado {
+      object-position: 50% 32%;
+    }
+
+    .thumb-screenshot img.shot-puzzle {
+      object-position: center center;
     }
 
     .card-body {
@@ -841,11 +781,8 @@
         </article>
 
         <article class="project-card reveal">
-          <div class="card-thumb thumb-puzzle-8" aria-hidden="true">
-            <span class="c1"></span><span class="c2"></span><span class="c0"></span><span class="c3"></span><span class="c0"></span><span class="c2"></span><span class="c1"></span><span class="c0"></span>
-            <span class="c0"></span><span class="c3"></span><span class="c1"></span><span class="c2"></span><span class="c4"></span><span class="c0"></span><span class="c3"></span><span class="c1"></span>
-            <span class="c2"></span><span class="c0"></span><span class="c4"></span><span class="c1"></span><span class="c3"></span><span class="c2"></span><span class="c0"></span><span class="c4"></span>
-            <span class="c0"></span><span class="c1"></span><span class="c2"></span><span class="c0"></span><span class="c1"></span><span class="c4"></span><span class="c3"></span><span class="c0"></span>
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/puzzle-game-screenshot.jpg" alt="8×8 スワップパズル — プレイ画面" class="shot-puzzle" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag game">Summer Engine · Puzzle</span>
@@ -856,11 +793,8 @@
         </article>
 
         <article class="project-card reveal">
-          <div class="card-thumb thumb-othello" aria-hidden="true">
-            <span class="p1">あ</span><span></span><span class="p2">か</span><span></span><span class="p1">さ</span><span></span>
-            <span></span><span class="p2">き</span><span></span><span class="p1">た</span><span></span><span class="p2">な</span>
-            <span class="p1">ま</span><span></span><span></span><span class="p2">や</span><span></span><span></span><span class="p1">ら</span>
-            <span></span><span class="p2">わ</span><span class="p1">ん</span><span></span><span></span><span class="p2">お</span><span></span>
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/moji-othello-screenshot.png" alt="文字オセロ — プレイ画面" class="shot-moji-othello" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag game">Godot 4.6 · Playable</span>
@@ -871,10 +805,8 @@
         </article>
 
         <article class="project-card reveal">
-          <div class="card-thumb thumb-kiewado" aria-hidden="true">
-            <span>あ</span><span>き</span><span>ね</span>
-            <span>こ</span><span>る</span><span>ん</span>
-            <span>い</span><span>え</span><span>お</span>
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/kiewado-screenshot.png" alt="キエワード — プレイ画面" class="shot-kiewado" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag dev">Godot 4 · Prototype</span>
