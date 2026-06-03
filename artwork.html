@@ -123,10 +123,17 @@
 
     <div class="back-box">
       <a href="index.html" class="btn-back">← トップページに戻る</a>
+      <a href="#" data-pixiv class="btn-back" style="margin-left:12px;border-color:rgba(0,150,250,0.45);color:#7dd3fc;" target="_blank" rel="noopener noreferrer">pixiv →</a>
     </div>
   </main>
 
   <footer>&copy; 2026 Touya Oshima. All Rights Reserved.</footer>
 
+  <script>
+    const PIXIV_PROFILE_URL = "https://www.pixiv.net/users/REPLACE_PIXIV_USER_ID";
+    document.querySelectorAll("[data-pixiv]").forEach((link) => {
+      if (!PIXIV_PROFILE_URL.includes("REPLACE")) link.href = PIXIV_PROFILE_URL;
+    });
+  </script>
 </body>
 </html>

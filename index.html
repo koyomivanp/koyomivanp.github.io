@@ -638,6 +638,49 @@
       padding-bottom: 2px;
     }
 
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-family: var(--font-en);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      color: var(--text);
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .social-links a.pixiv {
+      border-color: rgba(0, 150, 250, 0.45);
+      color: #7dd3fc;
+    }
+
+    .social-links a.pixiv:hover {
+      background: rgba(0, 150, 250, 0.12);
+      color: #bae6fd;
+    }
+
+    .social-links a.github:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
     footer {
       text-align: center;
       padding: 32px 20px 48px;
@@ -646,6 +689,23 @@
       font-family: var(--font-en);
       border-top: 1px solid var(--line);
     }
+
+    footer .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    footer .footer-links a:hover { color: var(--text); }
 
     /* Responsive */
     @media (max-width: 900px) {
@@ -823,8 +883,9 @@
           <div class="card-body">
             <span class="tag art">Visual</span>
             <h3>キャラクター・2D イラスト</h3>
-            <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。</p>
+            <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。イラストの投稿は pixiv でも公開しています。</p>
             <a href="artwork.html" class="btn btn-ghost">ギャラリーを見る →</a>
+            <a href="#" data-pixiv class="btn btn-ghost" target="_blank" rel="noopener noreferrer">pixiv →</a>
           </div>
         </article>
 
@@ -853,16 +914,35 @@
       </div>
       <div class="contact-box reveal">
         <p>制作のご相談、コラボレーション、ポートフォリオに関するお問い合わせはこちらまで。</p>
+        <div class="social-links">
+          <a href="https://github.com/koyomivanp" target="_blank" rel="noopener noreferrer" class="github">GitHub</a>
+          <a href="#" data-pixiv target="_blank" rel="noopener noreferrer" class="pixiv">pixiv</a>
+        </div>
         <a class="mail" href="mailto:tochatarou@gmail.com">tochatarou@gmail.com</a>
         <br>
         <a href="mailto:tochatarou@gmail.com" class="btn btn-primary">メールを送る</a>
       </div>
     </section>
 
-    <footer>&copy; 2026 Touya Oshima</footer>
+    <footer>
+      <div class="footer-links">
+        <a href="https://github.com/koyomivanp" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#" data-pixiv target="_blank" rel="noopener noreferrer">pixiv</a>
+        <a href="artwork.html">Art Gallery</a>
+      </div>
+      &copy; 2026 Touya Oshima
+    </footer>
   </div>
 
   <script>
+    // pixiv: dashboard/works は本人だけ。公開用は https://www.pixiv.net/users/数字
+    const PIXIV_PROFILE_URL = "https://www.pixiv.net/users/REPLACE_PIXIV_USER_ID";
+    document.querySelectorAll("[data-pixiv]").forEach((link) => {
+      if (!PIXIV_PROFILE_URL.includes("REPLACE")) {
+        link.href = PIXIV_PROFILE_URL;
+      }
+    });
+
     const reveals = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
