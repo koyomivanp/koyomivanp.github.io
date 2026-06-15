@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>大島 橙也 | Game Dev × Visual</title>
-  <meta name="description" content="大島橙也 — ゲーム制作とビジュアルを一人で届けるクリエイター。Java / Unity / Canvas デモ公開中。">
+  <meta name="description" content="大島橙也 — ゲーム制作・Webツール・ビジュアル。Unity / Python / Expo。デモと制作実績を公開中。">
   <meta property="og:title" content="大島 橙也 | Portfolio">
   <meta property="og:description" content="Game Dev × Character Art — 作る・描く・考える">
   <meta property="og:type" content="website">
@@ -31,6 +31,8 @@
       --game: #f59e0b;
       --art: #e879f9;
       --think: #38bdf8;
+      --dev: #a78bfa;
+      --web-pop: #ff4757;
       --grad: linear-gradient(135deg, #f59e0b 0%, #e879f9 55%, #38bdf8 100%);
       --radius: 20px;
       --font: "Noto Sans JP", "Segoe UI", sans-serif;
@@ -596,7 +598,124 @@
     .tag.game { background: rgba(245, 158, 11, 0.15); color: var(--game); }
     .tag.art { background: rgba(232, 121, 249, 0.15); color: var(--art); }
     .tag.think { background: rgba(56, 189, 248, 0.15); color: var(--think); }
-    .tag.dev { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+    .tag.dev { background: rgba(167, 139, 250, 0.15); color: var(--dev); }
+    .tag.web { background: rgba(255, 71, 87, 0.12); color: var(--web-pop); }
+
+    .works-category {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    .works-category:first-of-type { margin-top: 0; }
+
+    .works-category h3 {
+      font-family: var(--font-en);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .works-category::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .project-card.featured-dev {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      position: relative;
+      overflow: visible;
+    }
+
+    .project-card.featured-dev::before {
+      content: "Featured";
+      position: absolute;
+      top: 16px;
+      right: -8px;
+      z-index: 3;
+      background: var(--web-pop);
+      color: #fff;
+      font-family: var(--font-en);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      transform: rotate(3deg);
+      box-shadow: 0 8px 24px rgba(255, 71, 87, 0.35);
+    }
+
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .thumb-web-splatoon {
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 120, 50, 0.35), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(120, 80, 255, 0.25), transparent 50%),
+        linear-gradient(145deg, #1a1428, #2d2240 45%, #ff6b35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .thumb-web-splatoon .mock-title {
+      font-weight: 900;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      letter-spacing: 0.04em;
+      text-align: center;
+      line-height: 1.35;
+      padding: 20px;
+    }
+
+    .thumb-web-pdf {
+      background: linear-gradient(160deg, #eef1ff 0%, #f4f6fb 40%, #3b5bfd 140%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      color: #1a1f36;
+    }
+
+    .thumb-web-pdf .mock-stack {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .thumb-web-md {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      padding: 24px;
+    }
+
+    .thumb-web-md pre {
+      width: 100%;
+      font-size: 0.72rem;
+      line-height: 1.5;
+      color: #94a3b8;
+      font-family: ui-monospace, monospace;
+    }
+
+    .thumb-web-md .accent { color: #38bdf8; }
 
     .card-body h3 {
       font-size: 1.1rem;
@@ -740,6 +859,10 @@
 
       .project-card.featured { grid-template-columns: 1fr; }
 
+      .project-card.featured-dev { grid-template-columns: 1fr; }
+
+      .project-card.featured-dev::before { right: 12px; top: 12px; }
+
       nav .links a:not(.nav-cta) { display: none; }
     }
   </style>
@@ -762,10 +885,10 @@
       <div class="hero-copy">
         <div class="eyebrow">Game Dev × Visual</div>
         <h1>ゲームを作る。<br>必要な<span class="accent">絵</span>も描く。</h1>
-        <p class="lead">大島橙也 — プログラミングとビジュアルを一人で回せるクリエイター。小さなゲームからUIまで、世界観を途切れさせず届けます。</p>
+        <p class="lead">大島橙也 — ゲーム制作から Web ツールまで、プログラムとビジュアルを一人で届けるクリエイター。データ更新サイトや PDF ユーティリティも手がけています。</p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">制作実績を見る</a>
-          <a href="vampiresurvivors/index.html" class="btn btn-ghost">Web デモを遊ぶ</a>
+          <a href="photo-pdf/" class="btn btn-ghost">Web ツールを試す</a>
         </div>
         <div class="hero-profile">
           <img src="profile.jpg" alt="大島橙也">
@@ -803,7 +926,7 @@
             <div class="pillar build">
               <div class="icon">⚙</div>
               <h4>Build</h4>
-              <p>Unity / Godot / Summer Engine / Java。ゲームロジックとプロトタイプ制作。</p>
+              <p>Unity / Godot / Python / Expo。ゲームロジックから stat.ink 連携の Web サイト、PDF ツールまで。</p>
             </div>
             <div class="pillar draw">
               <div class="icon">✦</div>
@@ -827,6 +950,58 @@
       </div>
 
       <div class="projects">
+        <div class="works-category reveal">
+          <h3>Web &amp; Tools</h3>
+        </div>
+
+        <article class="project-card featured-dev reveal">
+          <div class="card-thumb thumb-web-splatoon">
+            <div class="mock-title">スプラ最強武器<br>ランキング</div>
+          </div>
+          <div class="card-body">
+            <span class="tag web">Dev · Data · Live</span>
+            <h3>スプラ最強武器ランキング</h3>
+            <p>stat.ink から勝率データを自動取得し、Python で静的サイトを生成。GitHub Actions による日次更新、武器別ページ、診断・X マッチ境界値など。就活用の「データパイプライン + 公開」作品。</p>
+            <div class="card-links">
+              <a href="https://splatoon-ranking.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Live Site →</a>
+              <a href="https://github.com/koyomivanp/splatoon-ranking" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-web-pdf">
+            <div class="mock-stack"><span>🖼</span><span>→</span><span>PDF</span></div>
+          </div>
+          <div class="card-body">
+            <span class="tag dev">Web · Expo</span>
+            <h3>写真PDF</h3>
+            <p>カメラロールの写真を A4 PDF にまとめるツール。Web 版（ブラウザ完結）と Expo モバイル版の両方を実装。並べ替え・端末保存・共有に対応。</p>
+            <div class="card-links">
+              <a href="photo-pdf/" class="btn btn-primary">Web 版を試す →</a>
+              <a href="https://github.com/koyomivanp/photo-to-pdf" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-web-md">
+            <pre><span class="accent"># </span>見出し
+本文を **Markdown** で書いて
+<span class="accent">PDF</span> に変換</pre>
+          </div>
+          <div class="card-body">
+            <span class="tag dev">Web · Utility</span>
+            <h3>Markdown → PDF</h3>
+            <p>Markdown をブラウザ上で PDF に変換するシンプルな Web ツール。クライアント完結で、原稿執筆から出力までを一画面で完結。</p>
+            <a href="https://md-pdf-maker.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live Site →</a>
+          </div>
+        </article>
+
+        <div class="works-category reveal">
+          <h3>Games</h3>
+        </div>
+
         <article class="project-card featured reveal">
           <div class="card-thumb thumb-game">
             <div class="game-preview">
@@ -881,6 +1056,10 @@
           </div>
         </article>
 
+        <div class="works-category reveal">
+          <h3>Visual &amp; Research</h3>
+        </div>
+
         <article class="project-card reveal">
           <div class="card-thumb thumb-art">
             <img src="feri.jpg" alt="キャラクターイラスト1" class="char-focus-right">
@@ -934,6 +1113,8 @@
       <div class="footer-links">
         <a href="https://github.com/koyomivanp" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="#" data-pixiv target="_blank" rel="noopener noreferrer">pixiv</a>
+        <a href="photo-pdf/">写真PDF</a>
+        <a href="https://splatoon-ranking.netlify.app/" target="_blank" rel="noopener noreferrer">Splatoon Ranking</a>
         <a href="artwork.html">Art Gallery</a>
       </div>
       &copy; 2026 Touya Oshima
