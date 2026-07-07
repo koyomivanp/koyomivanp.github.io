@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>芋虫ホッケー | Touya Oshima</title>
+  <meta name="description" content="這うと体節が壁になるエアホッケー。Python / pygame-ce で制作。CPU・2P対戦、森テーマUI。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐛</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>
+    .game-page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 96px 20px 64px;
+    }
+    .game-page .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .game-page .back:hover { color: var(--game); }
+    .game-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .game-hero p {
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 24px;
+    }
+    .shot-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+      margin: 28px 0;
+    }
+    .shot-grid img {
+      width: 100%;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      display: block;
+    }
+    .play-box {
+      background: var(--surface);
+      border: 2px solid var(--line);
+      padding: 24px;
+      margin: 28px 0;
+      box-shadow: var(--shadow);
+    }
+    .play-box h2 {
+      font-family: var(--font-en);
+      letter-spacing: 0.08em;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--game);
+    }
+    .play-box ol, .play-box ul {
+      margin-left: 1.2rem;
+      color: var(--muted);
+    }
+    .play-box li { margin-bottom: 8px; }
+    .play-box code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.92em;
+    }
+    .play-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .controls section {
+      background: var(--surface2);
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+    .controls h3 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .controls p, .controls li {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 720px) {
+      .shot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="game-page wrap">
+    <a class="back" href="../index.html">← ポートフォリオへ戻る</a>
+
+    <div class="game-hero">
+      <span class="tag game">Python · pygame-ce · Game</span>
+      <h1>芋虫ホッケー</h1>
+      <p>這った跡が体節（壁）になる、2D エアホッケー。CPU 対戦・2 人対戦、ダッシュで壁をすり抜ける独自ルール。森テーマの UI とシネマティックな画面遷移を pygame-ce で実装しました。</p>
+    </div>
+
+    <div class="shot-grid">
+      <img src="../assets/imomushi-hockey-screenshot.png" alt="対戦画面 — 芋虫が葉っぱの跡を残す">
+      <img src="../assets/imomushi-hockey-title.png" alt="タイトル画面 — 森テーマのメニュー">
+    </div>
+
+    <div class="play-box">
+      <h2>PLAY</h2>
+      <p>ブラウザ内プレイは未対応です。PC 向けに Python 版を公開しています（Windows なら exe ビルドも可）。</p>
+      <ol>
+        <li><a href="https://github.com/koyomivanp/imomushi-hockey" target="_blank" rel="noopener noreferrer">GitHub リポジトリ</a> を clone</li>
+        <li><code>pip install -r requirements.txt</code></li>
+        <li><code>python main.py</code> で起動</li>
+      </ol>
+      <div class="play-actions">
+        <a href="https://github.com/koyomivanp/imomushi-hockey" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub で見る →</a>
+        <a href="https://github.com/koyomivanp/imomushi-hockey#windows-用-exe-のビルド" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Windows exe ビルド手順 →</a>
+      </div>
+    </div>
+
+    <div class="controls">
+      <section>
+        <h3>タイトル</h3>
+        <ul>
+          <li>↑↓ で選択 / Space で決定</li>
+          <li>M: BGM / F: 全画面 / Esc: 終了</li>
+        </ul>
+      </section>
+      <section>
+        <h3>対戦</h3>
+        <ul>
+          <li>P1: WASD + Shift ダッシュ</li>
+          <li>P2: 矢印 + Shift</li>
+          <li>先取 3 点で勝利</li>
+        </ul>
+      </section>
+      <section>
+        <h3>ルールの要点</h3>
+        <ul>
+          <li>這うと体節が壁になる</li>
+          <li>ダッシュ中は壁を出さず貫通</li>
+          <li>古い体節から消える</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
