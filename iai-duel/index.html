@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>居合デュエル | Touya Oshima</title>
+  <meta name="description" content="刹那の見切り ― 居合ゴースト対戦。Flet + Supabase の反射神経ゲーム。江戸風UI、オンラインランキング。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>
+    .game-page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 96px 20px 64px;
+    }
+    .game-page .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .game-page .back:hover { color: var(--game); }
+    .game-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .game-hero p {
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 24px;
+    }
+    .shot-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+      margin: 28px 0;
+    }
+    .shot-grid img {
+      width: 100%;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 9 / 16;
+      max-height: 420px;
+    }
+    .play-box {
+      background: var(--surface);
+      border: 2px solid var(--line);
+      padding: 24px;
+      margin: 28px 0;
+      box-shadow: var(--shadow);
+    }
+    .play-box h2 {
+      font-family: var(--font-en);
+      letter-spacing: 0.08em;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--game);
+    }
+    .play-box ol, .play-box ul {
+      margin-left: 1.2rem;
+      color: var(--muted);
+    }
+    .play-box li { margin-bottom: 8px; }
+    .play-box code {
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.92em;
+    }
+    .play-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .controls section {
+      background: var(--surface2);
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+    .controls h3 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .controls p, .controls li {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 720px) {
+      .shot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="game-page wrap">
+    <a class="back" href="../index.html">← ポートフォリオへ戻る</a>
+
+    <div class="game-hero">
+      <span class="tag game">Python · Flet · Supabase · Mobile</span>
+      <h1>居合デュエル</h1>
+      <p>カービィ「刹那の見切り」リスペクトの居合ゴースト対戦。合図「！」の瞬間にタップして反応速度を競う。Flet でスマホ向け UI、江戸風タイトルと掲示板モード選択、Supabase による全国ランキングと非同期対人戦を実装。</p>
+    </div>
+
+    <div class="shot-grid">
+      <img src="../assets/iai-duel-title.png" alt="タイトル画面 — 侍の影と TAP TO START">
+      <img src="../assets/iai-duel-iza.png" alt="いざ、尋常に — 居合の合図演出">
+    </div>
+
+    <div class="play-box">
+      <h2>PLAY</h2>
+      <p>PC では Python + uv でローカル起動。Web 版は Docker / Hugging Face Spaces 向けの構成を同梱（デプロイ準備済み）。</p>
+      <div class="play-actions">
+        <a href="https://github.com/koyomivanp/iai-duel" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub でソースを見る →</a>
+      </div>
+      <ol style="margin-top: 20px;">
+        <li><code>git clone https://github.com/koyomivanp/iai-duel.git</code></li>
+        <li><code>cd iai-duel</code></li>
+        <li><code>uv run iai_duel.py</code></li>
+      </ol>
+      <p style="margin-top: 16px; color: var(--muted); font-size: 0.9rem;">Web 配信: <code>FLET_FORCE_WEB_SERVER=true uv run iai_duel.py</code> で同一 Wi-Fi 内のスマホからアクセス可能。</p>
+    </div>
+
+    <div class="controls">
+      <section>
+        <h3>モード</h3>
+        <ul>
+          <li>孤城突破 — CPU 剣豪 5 人抜き</li>
+          <li>死闘 — ゴーストとの連勝バトル</li>
+          <li>なぞり斬り — 太刀筋を見切って斬る</li>
+          <li>英名録 — 全国ランキング</li>
+        </ul>
+      </section>
+      <section>
+        <h3>操作</h3>
+        <ul>
+          <li>「！」が出るまで動かない</li>
+          <li>合図の瞬間に画面タップ</li>
+          <li>早すぎるとフライング（未熟）</li>
+        </ul>
+      </section>
+      <section>
+        <h3>技術</h3>
+        <ul>
+          <li>Flet（モバイルファースト UI）</li>
+          <li>Supabase（スコア・連勝・自画像）</li>
+          <li>効果音 wav をコード内生成</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
