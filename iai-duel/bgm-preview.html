@@ -40,7 +40,7 @@
     <h1>風の BGM プレビュー</h1>
     <p>スマホではユーザー操作なしの自動再生が一瞬で止まります。<br>下のボタン（タップ）で音声セッションを解錠してループ再生します。</p>
     <button type="button" id="start" class="btn btn-primary">TAP TO START BGM</button>
-    <button type="button" id="stop" class="btn btn-ghost" hidden>停止</button>
+    <button type="button" id="stop" class="btn btn-ghost" style="display:none">停止</button>
     <p class="status" id="status" aria-live="polite">待機中 — まだ再生していません</p>
   </main>
   <script>
@@ -70,8 +70,8 @@
     startBtn.addEventListener("click", async () => {
       try {
         await audio.play();
-        startBtn.hidden = true;
-        stopBtn.hidden = false;
+        startBtn.style.display = "none";
+        stopBtn.style.display = "inline-flex";
         setStatus("再生中（ループ）— 止まらず続くはずです");
       } catch (err) {
         setStatus("再生に失敗: " + (err && err.message ? err.message : String(err)));
@@ -81,8 +81,8 @@
     stopBtn.addEventListener("click", () => {
       audio.pause();
       audio.currentTime = 0;
-      startBtn.hidden = false;
-      stopBtn.hidden = true;
+      startBtn.style.display = "inline-flex";
+      stopBtn.style.display = "none";
       setStatus("停止しました");
     });
   </script>
