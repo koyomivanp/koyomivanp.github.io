@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>居合デュエル BGM プレビュー（モバイル対策）</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>
+    .preview {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 96px 20px 64px;
+      text-align: center;
+    }
+    .preview h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      margin-bottom: 12px;
+    }
+    .preview p { color: var(--muted); margin-bottom: 20px; }
+    .status {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: var(--text);
+      min-height: 1.4em;
+    }
+    .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .back:hover { color: var(--game); }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="preview wrap">
+    <a class="back" href="./">← 居合デュエルへ戻る</a>
+    <h1>風の BGM プレビュー</h1>
+    <p>スマホではユーザー操作なしの自動再生が一瞬で止まります。<br>下のボタン（タップ）で音声セッションを解錠してループ再生します。</p>
+    <button type="button" id="start" class="btn btn-primary">TAP TO START BGM</button>
+    <button type="button" id="stop" class="btn btn-ghost" hidden>停止</button>
+    <p class="status" id="status" aria-live="polite">待機中 — まだ再生していません</p>
+  </main>
+  <script>
+    // 居合デュエル本体と同じ方針:
+    // 1) autoplay しない
+    // 2) ユーザーのタップで play()
+    // 3) loop = true（終わったら自分で再開する保険つき）
+    const audio = new Audio("app/assets/wind.wav");
+    audio.loop = true;
+    audio.preload = "auto";
+    audio.volume = 0.35;
+
+    const startBtn = document.getElementById("start");
+    const stopBtn = document.getElementById("stop");
+    const status = document.getElementById("status");
+
+    function setStatus(text) {
+      status.textContent = text;
+    }
+
+    audio.addEventListener("ended", () => {
+      // loop が効かない古い WebView 向け
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    });
+
+    startBtn.addEventListener("click", async () => {
+      try {
+        await audio.play();
+        startBtn.hidden = true;
+        stopBtn.hidden = false;
+        setStatus("再生中（ループ）— 止まらず続くはずです");
+      } catch (err) {
+        setStatus("再生に失敗: " + (err && err.message ? err.message : String(err)));
+      }
+    });
+
+    stopBtn.addEventListener("click", () => {
+      audio.pause();
+      audio.currentTime = 0;
+      startBtn.hidden = false;
+      stopBtn.hidden = true;
+      setStatus("停止しました");
+    });
+  </script>
+</body>
+</html>
