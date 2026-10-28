@@ -615,7 +615,7 @@ section {
 
 .thumb-art {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2px;
 }
 
@@ -627,6 +627,7 @@ section {
 }
 
 .thumb-art img.char-focus-right { object-position: 88% center; }
+.thumb-art img.char-focus-face { object-position: 42% 18%; }
 
 .thumb-ux {
   background: #111;

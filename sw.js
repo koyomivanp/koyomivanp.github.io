@@ -1,6 +1,6 @@
 // 大島橙也ポートフォリオ Service Worker
 // キャッシュ名のバージョンを上げると、古いキャッシュが破棄されて更新が反映される。
-const CACHE = "touya-portfolio-v2";
+const CACHE = "touya-portfolio-v3";
 
 // 最初にまとめてキャッシュしておく中心的なファイル（アプリシェル）。
 const PRECACHE = [
@@ -11,6 +11,7 @@ const PRECACHE = [
   "./profile.jpg",
   "./feri.jpg",
   "./pel.jpg",
+  "./scarlet.jpg",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
