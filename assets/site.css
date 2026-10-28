@@ -481,6 +481,13 @@ section {
 .project-card.featured .card-thumb,
 .project-card.featured-dev .card-thumb { min-height: 260px; }
 
+/* 横長カードの画像は本文の高さに合わせて切り抜く（縦長の画像でカードが伸びないように） */
+.project-card.featured .thumb-screenshot img,
+.project-card.featured-dev .thumb-screenshot img {
+  position: absolute;
+  inset: 0;
+}
+
 .works-category {
   grid-column: 1 / -1;
   margin: 8px 0 2px;
@@ -543,6 +550,7 @@ section {
 .thumb-web-splatoon img { object-position: top center; min-height: 220px; }
 .thumb-screenshot img.shot-moji-othello { object-position: 42% 38%; }
 .thumb-screenshot img.shot-kiewado { object-position: 50% 32%; }
+.thumb-screenshot img.shot-kaikei { object-position: top left; }
 
 .thumb-web-pdf {
   background: linear-gradient(160deg, #1a1a1a, #2a2a2a);
@@ -737,5 +745,7 @@ footer .footer-links a:hover { color: var(--p5-red); }
   .projects { grid-template-columns: 1fr; }
   .project-card.featured,
   .project-card.featured-dev { grid-template-columns: 1fr; }
+  .project-card.featured .thumb-screenshot,
+  .project-card.featured-dev .thumb-screenshot { aspect-ratio: 16 / 10; min-height: 0; }
   nav .links a:not(.nav-cta) { display: none; }
 }

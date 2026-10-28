@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部活会計 | Touya Oshima</title>
+  <meta name="description" content="大学の部活の立て替え・割り勘・精算を自動で計算する Web アプリ。LINE のメッセージを AI で支出に分け、精算結果を LINE 用の文章で書き出せる。React + TypeScript。">
+  <meta property="og:title" content="部活会計 | Touya Oshima">
+  <meta property="og:description" content="立て替えと割り勘の精算を自動で。LINE のメッセージから AI で支出を読み取る、部活の会計係向け Web アプリ。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://koyomivanp.github.io/kaikei/">
+  <meta property="og:image" content="https://koyomivanp.github.io/assets/kaikei-thumb.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+  <style>
+    .work-page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 96px 20px 64px;
+    }
+    .work-page .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .work-page .back:hover { color: var(--p5-red); }
+    .work-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .work-hero p {
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 20px;
+    }
+    .work-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .work-actions .note {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    figure.shot {
+      margin: 32px 0;
+    }
+    figure.shot img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 2px solid #000;
+      box-shadow: var(--shadow);
+      background: #f4f2ec;
+    }
+    figure.shot figcaption {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+    .shot-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .shot-pair figure.shot { margin: 0; }
+    .shot-phone {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 18px;
+      align-items: start;
+      margin: 32px 0;
+    }
+    .shot-phone figure.shot { margin: 0; }
+    .shot-phone figure.phone img { max-width: 300px; margin: 0 auto; }
+    .info-box {
+      background: var(--surface);
+      border: 2px solid var(--line);
+      padding: 24px;
+      margin: 28px 0;
+      box-shadow: var(--shadow);
+    }
+    .info-box h2 {
+      font-family: var(--font-en);
+      letter-spacing: 0.08em;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--p5-red);
+    }
+    .info-box ul {
+      margin-left: 1.2rem;
+      color: var(--muted);
+    }
+    .info-box li { margin-bottom: 8px; }
+    .info-box li strong { color: var(--text); }
+    .points {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .points section {
+      background: var(--surface2);
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+    .points h3 {
+      font-size: 0.98rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .points p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 720px) {
+      .shot-pair, .shot-phone, .points { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="work-page wrap">
+    <a class="back" href="../index.html#projects">← ポートフォリオへ戻る</a>
+
+    <div class="work-hero">
+      <span class="tag web">Web · React · TypeScript · Claude API</span>
+      <h1>部活会計</h1>
+      <p>
+        所属するソフトテニス部で会計係をしていたときに、Excel で手計算していた「立て替え → 割り勘 → 精算」を置き換えるために作った Web アプリです。
+        車ごとの高速代・ガソリン代は運転手を除いた人数で割る、4年生以上は最初は参加者に入れない、といった部の実際のルールをそのまま組み込み、
+        引退後も後輩が使い続けられるように整えました。
+      </p>
+      <div class="work-actions">
+        <a href="https://koyomivanp.github.io/bukatsu-kaikei/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">アプリを開く →</a>
+        <a href="https://github.com/koyomivanp/bukatsu-kaikei" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+        <span class="note">開いて「サンプルデータで試す」を押すと、架空の部活のデータで操作できます。</span>
+      </div>
+    </div>
+
+    <figure class="shot">
+      <img src="../assets/kaikei-event.jpg" alt="会計の画面 — 参加者と車を名前のボタンで選び、支出を入力する" width="1200" height="1000">
+      <figcaption>会計の画面。参加者と「どの車に誰が乗り、誰が運転したか」を名前のボタンで切り替え、支出ごとに誰で割るかを自動で決める。</figcaption>
+    </figure>
+
+    <div class="shot-pair">
+      <figure class="shot">
+        <img src="../assets/kaikei-message.jpg" alt="メッセージから支出を追加 — AI が LINE の文章を支出に分けた確認画面" width="1200" height="520" loading="lazy">
+        <figcaption>LINE の「高橋車 高速 2100円」のような文章を貼ると、AI が支出に分ける。名簿の誰か決まらない名前（ニックネーム）や重複しそうなものは、追加する前に確認する。</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="../assets/kaikei-breakdown.jpg" alt="支出の内訳 — 何にいくら、誰が立て替え、何人で割ったか" width="1200" height="640" loading="lazy">
+        <figcaption>部員への説明用の「支出の内訳」。選んだ会計の支出を、何にいくら・誰が立て替え・何人で割って1人いくらで並べ、PDF や LINE 用の文章で書き出す。</figcaption>
+      </figure>
+    </div>
+
+    <div class="shot-phone">
+      <figure class="shot">
+        <img src="../assets/kaikei-settlement.jpg" alt="精算 — 一人ずつの負担額・立て替え・差し引き" width="1200" height="760" loading="lazy">
+        <figcaption>精算。負担額・立て替え・事前の集金を差し引いて、一人ずつ「会計に払う／会計から受け取る」額を出す。</figcaption>
+      </figure>
+      <figure class="shot phone">
+        <img src="../assets/kaikei-phone.jpg" alt="スマートフォンでの表示 — LINE に貼る精算の文章" width="780" height="1688" loading="lazy">
+        <figcaption>スマホでも使える。精算は LINE にそのまま貼れる文章でコピーできる。</figcaption>
+      </figure>
+    </div>
+
+    <div class="info-box">
+      <h2>FEATURES</h2>
+      <ul>
+        <li><strong>名簿</strong> — 毎年の継続届（Excel）を読み込むと、学籍番号で照合して学年の更新・新入部員の追加・卒業生の OB 化をまとめて行う</li>
+        <li><strong>割り勘</strong> — 高速・ガソリンは車ごとに「乗った人 − 運転手」で、雑費はイベント参加者で割る。学年・性別での絞り込みや個別指定、端数の配分も自動</li>
+        <li><strong>AI で入力</strong> — LINE のメッセージを貼ると Claude が支出ごとに分け、名簿・車と照らし合わせてから追加。レシート画像は金額を読み取って支出に結びつける</li>
+        <li><strong>精算と共有</strong> — 集金・返金も含めて一人ずつの過不足を計算し、LINE 用の文章・PDF で共有。精算済みのチェック、複数の会計のまとめて集計にも対応</li>
+        <li><strong>引き継ぎ</strong> — バックアップファイルで次の会計係へ。書き出し忘れは画面で知らせる</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>POINTS</h2>
+      <div class="points">
+        <section>
+          <h3>サーバーを持たない</h3>
+          <p>部員の名前やお金の記録を外に置かないよう、データはブラウザの中だけに保存。GitHub Pages に置くだけで動くので、引退後も維持費や管理者が要らない。</p>
+        </section>
+        <section>
+          <h3>AI には「下書き」だけさせる</h3>
+          <p>お金の記録なので、AI の読み取り結果は必ず確認画面を通す。名前は AI に推測させず、アプリ側で名簿と照合し、決まらないところだけ人が選ぶ。</p>
+        </section>
+        <section>
+          <h3>実際の使い方から削る</h3>
+          <p>部の運用を聞きながら作り直し、使わない「日付」「部費から払う」などの項目は削除。レシートから支出を自動で作る機能も、間違いのもとになるため金額照合だけに絞った。</p>
+        </section>
+        <section>
+          <h3>計算をテストで守る</h3>
+          <p>割り勘・精算・データ移行・メッセージの照合などを 60 項目の自動チェックで確認し、画面はヘッドレスブラウザで操作して確かめながら変更した。</p>
+        </section>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h2>TECH</h2>
+      <ul>
+        <li>React 18 + TypeScript（Vite）、GitHub Actions で GitHub Pages に自動デプロイ</li>
+        <li>Claude API（Messages API の tool use で決まった形の JSON を返させる）をブラウザから直接呼び出し</li>
+        <li>read-excel-file で継続届の .xlsx を読み込み、localStorage に保存</li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

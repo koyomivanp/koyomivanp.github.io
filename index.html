@@ -4,14 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>大島 橙也 | Game Dev × Visual</title>
-  <meta name="description" content="大島橙也 — ゲーム制作・Webツール・ビジュアル。Unity / Python / Expo。デモと制作実績を公開中。">
+  <meta name="description" content="大島橙也 — ゲーム制作・Webツール・ビジュアル。Unity / Godot / Python / React。デモと制作実績を公開中。">
   <meta property="og:title" content="大島 橙也 | Portfolio">
-  <meta property="og:description" content="Game Dev × Character Art — 作る・描く・考える">
+  <meta property="og:description" content="ゲーム制作・Web ツール・キャラクターイラスト。作る・描く・考える。">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://koyomivanp.github.io/">
+  <meta property="og:image" content="https://koyomivanp.github.io/feri.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#ff003c">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Touya Oshima">
@@ -38,7 +42,7 @@
       <div class="hero-copy">
         <div class="eyebrow">Game Dev × Visual</div>
         <h1>ゲームを作る。<br>必要な<span class="accent">絵</span>も描く。</h1>
-        <p class="lead">大島橙也 — ゲーム制作から Web ツールまで、プログラムとビジュアルを一人で届けるクリエイター。データ更新サイトや PDF ユーティリティも手がけています。</p>
+        <p class="lead">大島橙也 — ゲーム制作から Web ツールまで、プログラムとビジュアルを一人で届けるクリエイター。データ更新サイトや PDF ユーティリティ、部活の会計アプリなど、実際に使われる Web ツールも手がけています。</p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">制作実績を見る</a>
           <a href="photo-pdf/" class="btn btn-ghost">Web ツールを試す</a>
@@ -69,9 +73,10 @@
         <span class="skills-label">SKILLS</span>
         <ul class="skills-list">
           <li>Python</li>
-          <li>TypeScript</li>
+          <li>TypeScript / React</li>
           <li>Unity / Godot</li>
           <li>Expo</li>
+          <li>Claude API</li>
           <li>GitHub Actions</li>
           <li>Data Pipeline</li>
           <li>UI / UX</li>
@@ -137,6 +142,22 @@
           </div>
         </article>
 
+        <article class="project-card featured reveal">
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/kaikei-thumb.jpg" alt="部活会計 — 参加者と車を選び、支出を入力する画面" class="shot-kaikei" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="tag web">Web · React · Claude API</span>
+            <h3>部活会計</h3>
+            <p>部活の立て替え・割り勘・精算を自動で計算する会計係向けアプリ。車ごとに運転手を除いて割るなど部の実際のルールを組み込み、LINE のメッセージを AI で支出に分けて取り込める。サーバーなしでブラウザ完結、後輩への引き継ぎまで想定。</p>
+            <div class="card-links">
+              <a href="kaikei/" class="btn btn-primary">詳細を見る →</a>
+              <a href="https://koyomivanp.github.io/bukatsu-kaikei/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">アプリを開く →</a>
+              <a href="https://github.com/koyomivanp/bukatsu-kaikei" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
         <article class="project-card reveal">
           <div class="card-thumb thumb-web-pdf">
             <div class="mock-stack"><span>🖼</span><span>→</span><span>PDF</span></div>
@@ -162,7 +183,9 @@
             <span class="tag dev">Web · Utility</span>
             <h3>Markdown → PDF</h3>
             <p>Markdown をブラウザ上で PDF に変換するシンプルな Web ツール。クライアント完結で、原稿執筆から出力までを一画面で完結。</p>
-            <a href="https://md-pdf-maker.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live Site →</a>
+            <div class="card-links">
+              <a href="https://md-pdf-maker.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live Site →</a>
+            </div>
           </div>
         </article>
 
@@ -172,7 +195,7 @@
 
         <article class="project-card featured reveal">
           <div class="card-thumb thumb-screenshot">
-            <img src="assets/iai-duel-title.png" alt="居合デュエル — タイトル画面（侍の影）" loading="lazy" style="object-fit: cover; object-position: center 30%;">
+            <img src="assets/iai-duel-title.jpg" alt="居合デュエル — タイトル画面（侍の影）" loading="lazy" style="object-fit: cover; object-position: center 30%;">
           </div>
           <div class="card-body">
             <span class="tag game">Python · Flet · Supabase · Mobile</span>
@@ -216,7 +239,9 @@
             <span class="tag game">Game · Playable</span>
             <h3>サバイバル系 2D アクション</h3>
             <p>大量の敵を自動射撃でなぎ倒すサバイバルアクション。Java（Swing）で制作し、ポートフォリオ用に Canvas 版のブラウザデモも公開しています。ブラウザですぐ遊べます。</p>
-            <a href="vampiresurvivors/index.html" class="btn btn-primary">Web デモをプレイ →</a>
+            <div class="card-links">
+              <a href="vampiresurvivors/index.html" class="btn btn-primary">Web デモをプレイ →</a>
+            </div>
           </div>
         </article>
 
@@ -228,7 +253,9 @@
             <span class="tag game">Summer Engine · Puzzle</span>
             <h3>8×8 スワップパズル（Pazzle Attack）</h3>
             <p>隣接マスを入れ替え、同色4つ以上の連結で消す8×8パズル。連鎖とスコアを組み込み、Cursor と協力しながら C# でロジックを実装。Summer Engine 上でプレイ可能。</p>
-            <a href="https://github.com/koyomivanp/pazzle-attack" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            <div class="card-links">
+              <a href="https://github.com/koyomivanp/pazzle-attack" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
           </div>
         </article>
 
@@ -240,7 +267,9 @@
             <span class="tag game">Godot 4.6 · Playable</span>
             <h3>文字オセロ</h3>
             <p>6×6 盤にひらがなを置き、横・縦の2〜4文字の語を作って相手の駒を反転。オセロ × もじぴったん風ルールを Godot で実装。2人対戦・CPU対戦に対応。</p>
-            <a href="https://github.com/koyomivanp/moji-othello" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            <div class="card-links">
+              <a href="https://github.com/koyomivanp/moji-othello" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
           </div>
         </article>
 
@@ -268,8 +297,10 @@
             <span class="tag art">Visual</span>
             <h3>キャラクター・2D イラスト</h3>
             <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。イラストの投稿は pixiv でも公開しています。</p>
-            <a href="artwork.html" class="btn btn-ghost">ギャラリーを見る →</a>
-            <a href="#" data-pixiv class="btn btn-ghost" target="_blank" rel="noopener noreferrer">pixiv →</a>
+            <div class="card-links">
+              <a href="artwork.html" class="btn btn-ghost">ギャラリーを見る →</a>
+              <a href="#" data-pixiv class="btn btn-ghost" target="_blank" rel="noopener noreferrer">pixiv →</a>
+            </div>
           </div>
         </article>
 
@@ -314,6 +345,7 @@
         <a href="imomushi-hockey/">芋虫ホッケー</a>
         <a href="https://github.com/koyomivanp" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="#" data-pixiv target="_blank" rel="noopener noreferrer">pixiv</a>
+        <a href="kaikei/">部活会計</a>
         <a href="photo-pdf/">写真PDF</a>
         <a href="https://splatoon-ranking.netlify.app/" target="_blank" rel="noopener noreferrer">Splatoon Ranking</a>
         <a href="artwork.html">Art Gallery</a>
