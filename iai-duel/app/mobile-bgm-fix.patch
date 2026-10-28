@@ -1,0 +1,131 @@
+--- /tmp/iai-duel/iai_duel.py	2026-09-21 09:33:00.430283916 +0000
++++ /workspace/iai-duel/app/iai_duel.py	2026-09-21 09:40:57.385006016 +0000
+@@ -29,7 +29,8 @@
+ import flet_audio as fa
+ import httpx
+ 
+-# Linux のサーバー上（Web配信）かどうか。Web では音声拡張が無いので音を無効化する。
++# Web 配信フラグ（レイアウトや起動モードの参考）。音声はモバイル/Web でも有効にし、
++# ユーザー操作後に再生する（autoplay 禁止ポリシー対策）。
+ IS_WEB = bool(os.getenv("FLET_FORCE_WEB_SERVER") or os.getenv("WEB_MODE"))
+ 
+ # ===== Supabase 設定 =====
+@@ -734,19 +735,50 @@
+     cpu_cleared = bool(await prefs.get("iai.cpu_cleared"))
+     my_avatar = parse_avatar(await prefs.get("iai.avatar"))
+ 
+-    # ---- 音声（Web配信では音声拡張が無いため無効化）----
++    # ---- 音声 ----
++    # スマホ（特に Chrome）ではユーザー操作前の autoplay が一瞬鳴って止まる。
++    # BGM は TAP TO START などジェスチャー後に play() する。
+     wind = slap = signal_au = win_au = lose_au = foul_au = clear_au = None
+-    if not IS_WEB:
+-        wind = fa.Audio(src="/wind.wav", autoplay=not muted, volume=0.35,
+-                        release_mode=fa.ReleaseMode.LOOP)
+-        slap = fa.Audio(src="/slap.wav", autoplay=False, volume=1.0)
+-        signal_au = fa.Audio(src="/signal.wav", autoplay=False, volume=1.0)
+-        win_au = fa.Audio(src="/win.wav", autoplay=False, volume=0.85)
+-        lose_au = fa.Audio(src="/lose.wav", autoplay=False, volume=0.85)
+-        foul_au = fa.Audio(src="/foul.wav", autoplay=False, volume=0.8)
+-        clear_au = fa.Audio(src="/clear.wav", autoplay=False, volume=0.9)
++    bgm_started = False
++    fade_gen = 0
++
++    def _on_bgm_state(e):
++        """LOOP が効かない環境向けに、完了したら自分で再開する。"""
++        nonlocal bgm_started
++        if wind is None or muted or not bgm_started:
++            return
++        st = getattr(e, "state", None)
++        # STOPPED/PAUSED はミュートや一時停止なので再開しない
++        if st == fa.AudioState.COMPLETED or str(st).lower().endswith("completed"):
++            try:
++                wind.play()
++            except Exception:
++                pass
++
++    try:
++        wind = fa.Audio(
++            src="/wind.wav",
++            autoplay=False,
++            volume=0.35,
++            release_mode=fa.ReleaseMode.LOOP,
++            on_state_change=_on_bgm_state,
++        )
++        slap = fa.Audio(src="/slap.wav", autoplay=False, volume=1.0,
++                        release_mode=fa.ReleaseMode.STOP)
++        signal_au = fa.Audio(src="/signal.wav", autoplay=False, volume=1.0,
++                             release_mode=fa.ReleaseMode.STOP)
++        win_au = fa.Audio(src="/win.wav", autoplay=False, volume=0.85,
++                          release_mode=fa.ReleaseMode.STOP)
++        lose_au = fa.Audio(src="/lose.wav", autoplay=False, volume=0.85,
++                           release_mode=fa.ReleaseMode.STOP)
++        foul_au = fa.Audio(src="/foul.wav", autoplay=False, volume=0.8,
++                           release_mode=fa.ReleaseMode.STOP)
++        clear_au = fa.Audio(src="/clear.wav", autoplay=False, volume=0.9,
++                            release_mode=fa.ReleaseMode.STOP)
+         for a in (wind, slap, signal_au, win_au, lose_au, foul_au, clear_au):
+             page.services.append(a)
++    except Exception:
++        wind = slap = signal_au = win_au = lose_au = foul_au = clear_au = None
+ 
+     def play(a):
+         if a is None or muted:
+@@ -762,12 +794,29 @@
+     def play_signal():
+         play(signal_au or slap)
+ 
++    async def ensure_bgm():
++        """ユーザー操作の文脈で BGM を開始／再開する（モバイルの音声ロック解除）。"""
++        nonlocal bgm_started
++        if wind is None or muted:
++            return
++        try:
++            wind.volume = 0.35
++            wind.play()
++            bgm_started = True
++        except Exception:
++            bgm_started = False
++
+     async def fade_bgm(target: float, steps: int = 6, delay: float = 0.05):
++        nonlocal fade_gen
+         if wind is None or muted:
+             return
++        fade_gen += 1
++        my_gen = fade_gen
+         try:
+             start = getattr(wind, "volume", 0.35) or 0.35
+             for i in range(1, steps + 1):
++                if my_gen != fade_gen:
++                    return
+                 wind.volume = start + (target - start) * (i / steps)
+                 await asyncio.sleep(delay)
+         except Exception:
+@@ -834,12 +883,16 @@
+         return ft.Icons.VOLUME_OFF if muted else ft.Icons.VOLUME_UP
+ 
+     async def toggle_mute(e):
+-        nonlocal muted
++        nonlocal muted, bgm_started
+         muted = not muted
+         await prefs.set("iai.muted", muted)
+         if wind:
+             try:
+-                wind.pause() if muted else wind.resume()
++                if muted:
++                    wind.pause()
++                else:
++                    # resume では「一度も play できていない／OS に止められた」場合に再開できない
++                    await ensure_bgm()
+             except Exception:
+                 pass
+         for b in mute_buttons:
+@@ -1012,6 +1065,8 @@
+ 
+         async def on_tap(e):
+             splash_active["v"] = False
++            # ユーザーのタップで音声セッションを解錠し BGM を開始する
++            await ensure_bgm()
+             await show_mode_board()
+ 
+         splash = ft.GestureDetector(
