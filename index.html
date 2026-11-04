@@ -34,7 +34,7 @@
         <a href="#about">About</a>
         <a href="#projects">Works</a>
         <a href="#contact">Contact</a>
-        <a href="vampiresurvivors/index.html" class="nav-cta">Play Demo</a>
+        <a href="https://koyomivanp.github.io/okaasan-ni-tsuiteiku/" class="nav-cta" target="_blank" rel="noopener noreferrer">Play Demo</a>
       </div>
     </nav>
 
@@ -45,10 +45,9 @@
         <p class="lead">大島橙也 — ゲーム制作から Web ツールまで、プログラムとビジュアルを一人で届けるクリエイター。データ更新サイトや PDF ユーティリティ、部活の会計アプリなど、実際に使われる Web ツールも手がけています。</p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">制作実績を見る</a>
-          <a href="photo-pdf/" class="btn btn-ghost">Web ツールを試す</a>
+          <a href="https://koyomivanp.github.io/okaasan-ni-tsuiteiku/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">帰巣本能を遊ぶ</a>
         </div>
         <div class="hero-profile">
-          <img src="profile.jpg" alt="大島橙也">
           <div>
             <div class="name">大島 橙也 / Touya Oshima</div>
             <div class="role">Student · Game &amp; Visual Creator</div>
@@ -93,8 +92,8 @@
         <img class="about-photo" src="profile.jpg" alt="大島橙也 プロフィール写真">
         <div class="about-text">
           <h3>はじめまして、大島橙也です。</h3>
-          <p>Unity や Java を使ったゲーム制作を中心に活動しています。プログラムだけでなく、キャラクターの見た目やUIなど「必要なビジュアル」も自分で用意できるのが強みです。</p>
-          <p>AI（Cursor 等）を開発の相棒にしながら、試作から公開まで素早く回すスタイルで制作しています。完璧な絵師ではありませんが、ゲームに必要なクオリティのビジュアルは自分で仕上げられるところまで伸ばしています。</p>
+          <p>ゲーム制作を中心に、Web ツールも作っています。Three.js、Python、Godot、Java など、作るものに合わせて技術を選びます。プログラムだけでなく、キャラクターの見た目やUIなど「必要なビジュアル」も自分で用意できるのが強みです。</p>
+          <p>AI（Claude Code や Cursor）を開発の相棒にしながら、試作から公開まで素早く回すスタイルで制作しています。完璧な絵師ではありませんが、ゲームに必要なクオリティのビジュアルは自分で仕上げられるところまで伸ばしています。</p>
           <div class="pillars">
             <div class="pillar build">
               <div class="icon">⚙</div>
@@ -124,91 +123,10 @@
 
       <div class="projects">
         <div class="works-category reveal">
-          <h3>Web &amp; Tools</h3>
+          <h3>Selected Works</h3>
         </div>
 
         <article class="project-card featured-dev reveal">
-          <div class="card-thumb thumb-web-splatoon thumb-screenshot">
-            <img src="assets/splatoon-ranking-screenshot.png" alt="スプラ最強武器ランキング — トップページ" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="tag web">Dev · Data · Live</span>
-            <h3>スプラ最強武器ランキング</h3>
-            <p>stat.ink から勝率データを自動取得し、Python で静的サイトを生成。GitHub Actions による日次更新、武器別ページ、診断・X マッチ境界値など。就活用の「データパイプライン + 公開」作品。</p>
-            <div class="card-links">
-              <a href="https://splatoon-ranking.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Live Site →</a>
-              <a href="https://github.com/koyomivanp/splatoon-ranking" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card featured reveal">
-          <div class="card-thumb thumb-screenshot">
-            <img src="assets/kaikei-thumb.jpg" alt="部活会計 — 参加者と車を選び、支出を入力する画面" class="shot-kaikei" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="tag web">Web · React · Claude API</span>
-            <h3>部活会計</h3>
-            <p>部活の立て替え・割り勘・精算を自動で計算する会計係向けアプリ。車ごとに運転手を除いて割るなど部の実際のルールを組み込み、LINE のメッセージを AI で支出に分けて取り込める。サーバーなしでブラウザ完結、後輩への引き継ぎまで想定。</p>
-            <div class="card-links">
-              <a href="kaikei/" class="btn btn-primary">詳細を見る →</a>
-              <a href="https://koyomivanp.github.io/bukatsu-kaikei/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">アプリを開く →</a>
-              <a href="https://github.com/koyomivanp/bukatsu-kaikei" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="card-thumb thumb-web-pdf">
-            <div class="mock-stack"><span>🖼</span><span>→</span><span>PDF</span></div>
-          </div>
-          <div class="card-body">
-            <span class="tag dev">Web · Expo</span>
-            <h3>写真PDF</h3>
-            <p>カメラロールの写真を A4 PDF にまとめるツール。Web 版（ブラウザ完結）と Expo モバイル版の両方を実装。並べ替え・端末保存・共有に対応。</p>
-            <div class="card-links">
-              <a href="photo-pdf/" class="btn btn-primary">Web 版を試す →</a>
-              <a href="https://github.com/koyomivanp/photo-to-pdf" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal">
-          <div class="card-thumb thumb-web-md">
-            <pre><span class="accent"># </span>見出し
-本文を **Markdown** で書いて
-<span class="accent">PDF</span> に変換</pre>
-          </div>
-          <div class="card-body">
-            <span class="tag dev">Web · Utility</span>
-            <h3>Markdown → PDF</h3>
-            <p>Markdown をブラウザ上で PDF に変換するシンプルな Web ツール。クライアント完結で、原稿執筆から出力までを一画面で完結。</p>
-            <div class="card-links">
-              <a href="https://md-pdf-maker.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live Site →</a>
-            </div>
-          </div>
-        </article>
-
-        <div class="works-category reveal">
-          <h3>Games</h3>
-        </div>
-
-        <!-- 期間限定公開: 感想が集まったら外す -->
-        <article class="project-card featured reveal">
-          <div class="card-thumb thumb-screenshot">
-            <img src="assets/kinosei-poster.png" alt="きのせい — タイトルと、傷の入った年輪" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="tag game">Short Story · 期間限定公開</span>
-            <h3>きのせい</h3>
-            <p>悩みの種が心で発芽すると、人は木になる。制作中の 3D アクションゲームの原案として書いた短編。設定は自分で考え、本文は Claude が執筆。感想を集めるため、期間限定で公開しています。</p>
-            <div class="card-links">
-              <a href="https://claude.ai/artifact/8s3dnupmCnthfTGU7mSjWk" class="btn btn-primary" target="_blank" rel="noopener noreferrer">読む →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card featured reveal">
           <div class="card-thumb thumb-screenshot">
             <img src="assets/kisou-honnou-poster.png" alt="帰巣本能 — 青空と草地に大きなロゴ、お母さんアヒルとひなの列、遅れて追いかける1羽" loading="lazy">
           </div>
@@ -240,6 +158,41 @@
 
         <article class="project-card featured reveal">
           <div class="card-thumb thumb-screenshot">
+            <img src="assets/kaikei-thumb.jpg" alt="部活会計 — 参加者と車を選び、支出を入力する画面" class="shot-kaikei" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="tag web">Web · React · Claude API</span>
+            <h3>部活会計</h3>
+            <p>部活の立て替え・割り勘・精算を自動で計算する会計係向けアプリ。車ごとに運転手を除いて割るなど部の実際のルールを組み込み、LINE のメッセージを AI で支出に分けて取り込める。サーバーなしでブラウザ完結、後輩への引き継ぎまで想定。</p>
+            <div class="card-links">
+              <a href="kaikei/" class="btn btn-primary">詳細を見る →</a>
+              <a href="https://koyomivanp.github.io/bukatsu-kaikei/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">アプリを開く →</a>
+              <a href="https://github.com/koyomivanp/bukatsu-kaikei" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card featured reveal">
+          <div class="card-thumb thumb-web-splatoon thumb-screenshot">
+            <img src="assets/splatoon-ranking-screenshot.png" alt="スプラ最強武器ランキング — トップページ" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="tag web">Dev · Data · Live</span>
+            <h3>スプラ最強武器ランキング</h3>
+            <p>stat.ink から勝率データを自動取得し、Python で静的サイトを生成。GitHub Actions による日次更新、武器別ページ、診断・X マッチ境界値など。データの取得から公開までを自動化しています。</p>
+            <div class="card-links">
+              <a href="https://splatoon-ranking.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Live Site →</a>
+              <a href="https://github.com/koyomivanp/splatoon-ranking" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <div class="works-category reveal">
+          <h3>More Works</h3>
+        </div>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-screenshot">
             <img src="assets/imomushi-hockey-screenshot.png" alt="芋虫ホッケー — 対戦画面" loading="lazy">
           </div>
           <div class="card-body">
@@ -247,23 +200,15 @@
             <h3>芋虫ホッケー</h3>
             <p>這った跡が体節（壁）になる 2D エアホッケー。CPU・2P 対戦、ダッシュ貫通、森テーマ UI とシネマティック遷移。Python 版を GitHub で公開（PC 向け）。</p>
             <div class="card-links">
-              <a href="https://koyomivanp.itch.io/imomushi-hockey" class="btn btn-primary" target="_blank" rel="noopener noreferrer">itch.io で遊ぶ →</a>
-              <a href="imomushi-hockey/" class="btn btn-ghost">詳細 →</a>
+              <a href="imomushi-hockey/" class="btn btn-primary">詳細を見る →</a>
               <a href="https://github.com/koyomivanp/imomushi-hockey" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
             </div>
           </div>
         </article>
 
-        <article class="project-card featured reveal">
-          <div class="card-thumb thumb-game">
-            <div class="game-preview">
-              <div class="player"></div>
-              <div class="enemy"></div>
-              <div class="enemy"></div>
-              <div class="enemy"></div>
-              <div class="enemy"></div>
-              <div class="enemy"></div>
-            </div>
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/survival-screenshot.jpg" alt="サバイバル系 2D アクション — 敵に囲まれたプレイ画面" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag game">Game · Playable</span>
@@ -277,7 +222,7 @@
 
         <article class="project-card reveal">
           <div class="card-thumb thumb-screenshot">
-            <img src="assets/moji-othello-screenshot.png" alt="文字オセロ — プレイ画面" class="shot-moji-othello" loading="lazy">
+            <img src="assets/moji-othello-screenshot.png" alt="文字オセロ — プレイ画面" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag game">Godot 4.6 · Playable</span>
@@ -291,7 +236,7 @@
 
         <article class="project-card reveal">
           <div class="card-thumb thumb-screenshot">
-            <img src="assets/kiewado-screenshot.png" alt="キエワード — プレイ画面" class="shot-kiewado" loading="lazy">
+            <img src="assets/kiewado-screenshot.png" alt="キエワード — プレイ画面" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag dev">Godot 4 · Prototype</span>
@@ -300,20 +245,64 @@
           </div>
         </article>
 
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/photo-pdf-screenshot.jpg" alt="写真PDF — 写真を並べて順番を変える画面" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="tag dev">Web · Expo</span>
+            <h3>写真PDF</h3>
+            <p>カメラロールの写真を A4 PDF にまとめるツール。Web 版（ブラウザ完結）と Expo モバイル版の両方を実装。並べ替え・端末保存・共有に対応。</p>
+            <div class="card-links">
+              <a href="photo-pdf/" class="btn btn-primary">Web 版を試す →</a>
+              <a href="https://github.com/koyomivanp/photo-to-pdf" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/md-pdf-screenshot.jpg" alt="Markdown → PDF — エディタとプレビューの画面" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="tag dev">Web · Utility</span>
+            <h3>Markdown → PDF</h3>
+            <p>Markdown をブラウザ上で PDF に変換するシンプルな Web ツール。クライアント完結で、原稿執筆から出力までを一画面で完結。</p>
+            <div class="card-links">
+              <a href="https://md-pdf-maker.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live Site →</a>
+            </div>
+          </div>
+        </article>
+
         <div class="works-category reveal">
-          <h3>Visual &amp; Research</h3>
+          <h3>Story, Visual &amp; Research</h3>
         </div>
+
+        <!-- 期間限定公開: 感想が集まったら外す -->
+        <article class="project-card reveal">
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/kinosei-poster.png" alt="きのせい — タイトルと、傷の入った年輪" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="tag game">Short Story · 期間限定公開</span>
+            <h3>きのせい</h3>
+            <p>悩みの種が心で発芽すると、人は木になる。制作中の 3D アクションゲームの原案として書いた短編。設定は自分で考え、本文は Claude が執筆。感想を集めるため、期間限定で公開しています。</p>
+            <div class="card-links">
+              <a href="https://claude.ai/artifact/8s3dnupmCnthfTGU7mSjWk" class="btn btn-primary" target="_blank" rel="noopener noreferrer">読む →</a>
+            </div>
+          </div>
+        </article>
 
         <article class="project-card reveal">
           <div class="card-thumb thumb-art">
-            <img src="etna.jpg" alt="キャラクターイラスト Etna" class="char-focus-face">
-            <img src="feri.jpg" alt="キャラクターイラスト1" class="char-focus-right">
-            <img src="pel.jpg" alt="キャラクターイラスト2">
+            <img src="etna.jpg" alt="『ディスガイア』シリーズのエトナのファンアート" loading="lazy" class="char-focus-face">
+            <img src="feri.jpg" alt="キャラクターイラスト1" loading="lazy" class="char-focus-right">
+            <img src="pel.jpg" alt="キャラクターイラスト2" loading="lazy">
           </div>
           <div class="card-body">
             <span class="tag art">Visual</span>
             <h3>キャラクター・2D イラスト</h3>
-            <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。イラストの投稿は pixiv でも公開しています。</p>
+            <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。『ディスガイア』のエトナなど、ファンアートも含みます。イラストの投稿は pixiv でも公開しています。</p>
             <div class="card-links">
               <a href="artwork.html" class="btn btn-ghost">ギャラリーを見る →</a>
               <a href="#" data-pixiv class="btn btn-ghost" target="_blank" rel="noopener noreferrer">pixiv →</a>
@@ -322,13 +311,8 @@
         </article>
 
         <article class="project-card reveal">
-          <div class="card-thumb thumb-ux">
-            <div class="chart">
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
-            </div>
+          <div class="card-thumb thumb-stat">
+            <div><strong>38</strong><span>名への調査</span></div>
           </div>
           <div class="card-body">
             <span class="tag think">UX · Research</span>
@@ -350,8 +334,7 @@
           <a href="https://github.com/koyomivanp" target="_blank" rel="noopener noreferrer" class="github">GitHub</a>
           <a href="#" data-pixiv target="_blank" rel="noopener noreferrer" class="pixiv">pixiv</a>
         </div>
-        <a class="mail" href="mailto:tochatarou@gmail.com">tochatarou@gmail.com</a>
-        <br>
+        <div class="mail">tochatarou@gmail.com</div>
         <a href="mailto:tochatarou@gmail.com" class="btn btn-primary">メールを送る</a>
       </div>
     </section>
