@@ -129,13 +129,15 @@
       <p>PC では Python + uv でローカル起動。Web 版は Docker / Hugging Face Spaces 向けの構成を同梱（デプロイ準備済み）。</p>
       <div class="play-actions">
         <a href="https://github.com/koyomivanp/iai-duel" class="btn btn-primary" target="_blank" rel="noopener noreferrer">GitHub でソースを見る →</a>
+        <a href="app/" class="btn btn-ghost">修正版ソース（本サイト同梱）→</a>
       </div>
       <ol style="margin-top: 20px;">
-        <li><code>git clone https://github.com/koyomivanp/iai-duel.git</code></li>
-        <li><code>cd iai-duel</code></li>
+        <li><code>cd iai-duel/app</code>（本リポジトリ内の修正版）</li>
         <li><code>uv run iai_duel.py</code></li>
+        <li>タイトルの <strong>TAP TO START</strong> を押すと風の BGM がループ再生されます</li>
       </ol>
-      <p style="margin-top: 16px; color: var(--muted); font-size: 0.9rem;">Web 配信: <code>FLET_FORCE_WEB_SERVER=true uv run iai_duel.py</code> で同一 Wi-Fi 内のスマホからアクセス可能。</p>
+      <p style="margin-top: 16px; color: var(--muted); font-size: 0.9rem;">Web 配信: <code>FLET_FORCE_WEB_SERVER=true uv run iai_duel.py</code> で同一 Wi-Fi 内のスマホからアクセス可能。スマホでは自動再生が遮断されるため、BGM はタップ後に開始します。</p>
+      <p style="margin-top: 12px; color: var(--muted); font-size: 0.9rem;">BGM だけ試す（ブラウザ）: <a href="bgm-preview.html" style="color: var(--game);">モバイル向け BGM プレビュー</a></p>
     </div>
 
     <div class="controls">
