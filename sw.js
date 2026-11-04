@@ -1,6 +1,6 @@
 // 大島橙也ポートフォリオ Service Worker
 // キャッシュ名のバージョンを上げると、古いキャッシュが破棄されて更新が反映される。
-const CACHE = "touya-portfolio-v6";
+const CACHE = "touya-portfolio-v7";
 
 // 最初にまとめてキャッシュしておく中心的なファイル（アプリシェル）。
 const PRECACHE = [
