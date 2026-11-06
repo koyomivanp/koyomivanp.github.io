@@ -70,8 +70,10 @@ async def custom_site():
         __import__(__name__).__file__ = main
 
         # now make a prompt
-        msg  = "画面をタップしてスタート"
-        platform.window.infobox.innerText = msg
+        # 日本語を Python から JS へ渡すと文字化けするので、文言は HTML 側（TAP_MSG）に置き、
+        # ここからは英数字だけの JS を実行して表示する
+        msg  = "tap to start"
+        platform.window.eval("infobox.innerText = TAP_MSG")
         print("\n"*4, f"    * Waiting for media user engagement. {msg} *" , "\n"*4)
 
         while not platform.window.MM.UME:
@@ -94,6 +96,7 @@ async def custom_site():
     # your main.py has an infinite sync loop somewhere !
 
     platform.window.infobox.style.display = "none"
+    platform.window.crawler.style.display = "none"
     platform.window.config.gui_divider = 1
     platform.window.window_resize()
     print("default.tmpl: done")
@@ -161,6 +164,8 @@ config = {
     fb_height : "960"
 }
 
+const TAP_MSG = "画面をタップしてスタート";
+
 function show_infobox() {
     infobox.style.display = "block";
 
@@ -180,6 +185,13 @@ function show_infobox() {
 
     <title>芋虫ホッケー</title>
     <meta charset="UTF-8">
+    <meta name="description" content="這った跡が壁になるエアホッケー。ダッシュで打てば相手の体を突き破る！スマホ・PCのブラウザで無料。">
+    <meta property="og:title" content="芋虫ホッケー">
+    <meta property="og:description" content="這った跡が壁になるエアホッケー。ダッシュで打てば相手の体を突き破る！スマホ・PCのブラウザで無料。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://koyomivanp.github.io/imomushi-hockey/play/">
+    <meta property="og:image" content="https://koyomivanp.github.io/imomushi-hockey/og.png">
+    <meta name="twitter:card" content="summary_large_image">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
@@ -205,6 +217,11 @@ function show_infobox() {
 
         #infobox {
             position: fixed; /* center relative to viewport */
+            /* 読み込み直後は show_infobox が呼ばれる前で左上に出てしまうので、芋虫の下の真ん中に固定する */
+            left: 50% !important;
+            top: calc(50% - 20px) !important;
+            transform: translateX(-50%);
+            white-space: nowrap;
             background: #1c2e20;
             color: #dae4c4;
             border-radius: 12px;
@@ -212,6 +229,37 @@ function show_infobox() {
             padding: 12px 24px;
  /*           display: none; */
             z-index: 999999;
+        }
+        /* 読み込み中の芋虫（ゲームが始まったら消す） */
+        #crawler {
+            position: fixed;
+            left: 50%;
+            top: calc(50% - 90px);
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 0;
+            z-index: 999999;
+        }
+        #crawler i, #crawler b {
+            display: block;
+            width: 34px;
+            height: 34px;
+            margin-left: -8px;
+            border-radius: 50%;
+            background: #4fc36a;
+            border: 4px solid #2b2a22;
+            animation: crawl 0.9s ease-in-out infinite;
+        }
+        #crawler b { width: 42px; height: 42px; background: #6ad681; }
+        #crawler i:nth-child(1) { animation-delay: 0s; }
+        #crawler i:nth-child(2) { animation-delay: 0.1s; }
+        #crawler i:nth-child(3) { animation-delay: 0.2s; }
+        #crawler i:nth-child(4) { animation-delay: 0.3s; }
+        #crawler b { animation-delay: 0.4s; }
+        @keyframes crawl {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
         }
         /* 縦画面の比率を保って画面いっぱいに（pygbag の自動調整より優先） */
         #canvas {
@@ -327,7 +375,8 @@ height="960px"
     oncontextmenu="event.preventDefault()" tabindex=1 hidden>
     </canvas>
 
-    <div id="infobox">Loading, please wait ...</div>
+    <div id="crawler" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+    <div id="infobox">芋虫を起こしています…</div>
 
     <div id=html></div>
 

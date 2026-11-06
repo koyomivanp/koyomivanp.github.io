@@ -1,6 +1,6 @@
 // 大島橙也ポートフォリオ Service Worker
 // キャッシュ名のバージョンを上げると、古いキャッシュが破棄されて更新が反映される。
-const CACHE = "touya-portfolio-v8";
+const CACHE = "touya-portfolio-v9";
 
 // 最初にまとめてキャッシュしておく中心的なファイル（アプリシェル）。
 const PRECACHE = [
@@ -37,6 +37,10 @@ self.addEventListener("fetch", (event) => {
 
   // GET 以外（フォーム送信など）はそのままネットワークへ。
   if (request.method !== "GET") return;
+
+  // ブラウザ版ゲーム（芋虫ホッケーなど）は大きく、更新のたびに中身が変わるので触らない。
+  // 古い版がキャッシュから出ないよう、いつもネットワークから取る。
+  if (new URL(request.url).pathname.includes("/play/")) return;
 
   // ページ遷移はネットワーク優先。オフライン時はキャッシュ→最後にトップへフォールバック。
   if (request.mode === "navigate") {
