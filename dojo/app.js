@@ -11,6 +11,15 @@
     ["wrong", "まちがえた問題"]
   ];
 
+  var SYNC_URL = "https://mjattwfxzpefgklbqlpz.supabase.co/rest/v1/rpc/";
+  var SYNC_APIKEY = "sb_publishable_d5SnRIbuJGfntfjOObIWWw_iKR0GOt9";
+  var syncDirty = {};
+  var syncTimer = null;
+  var syncRunning = false;
+  var syncAgain = false;
+  var syncError = "";
+  var syncedAt = null;
+
   var bankId = localStorage.getItem("dojo-active-bank") || "marketing";
   if (!BANKS[bankId]) bankId = "marketing";
 
@@ -49,6 +58,7 @@
     '<div class="side">' +
       '<ul class="weak" id="weak"></ul>' +
       '<div class="tools">' +
+        '<button type="button" id="sync"></button>' +
         '<button type="button" id="restore"></button>' +
         '<button type="button" id="copy">記録をコピー</button>' +
         '<button type="button" id="reset">記録を消す</button>' +
@@ -59,11 +69,19 @@
   document.getElementById("restore").addEventListener("click", restoreRemoved);
   document.getElementById("copy").addEventListener("click", copyStats);
   document.getElementById("reset").addEventListener("click", resetStats);
+  document.getElementById("sync").addEventListener("click", onSyncClick);
   document.addEventListener("keydown", onKey);
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") syncAll();
+    else runSync();
+  });
+  window.addEventListener("online", syncAll);
 
   applyEdits();
   renderChrome();
   rebuild();
+  renderSyncLabel();
+  syncAll();
 
   function meta() { return BANKS[state.bank].meta; }
   function qs() { return merged; }
@@ -110,6 +128,7 @@
         }
       }));
     } catch (e) {}
+    if (hasUnsyncedChange(state.bank)) syncSoon();
   }
 
   function switchBank(id) {
@@ -521,6 +540,7 @@
     state.editing = null;
     state.status = "idle";
     renderCard();
+    syncSoon();
   }
 
   function isAdded(id) {
@@ -796,6 +816,218 @@
     }
     e.preventDefault();
     next();
+  }
+
+  function syncKey() {
+    try {
+      return localStorage.getItem("dojo-sync-key") || "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function rpc(name, body) {
+    return fetch(SYNC_URL + name, {
+      method: "POST",
+      headers: { apikey: SYNC_APIKEY, "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        if (!res.ok) throw new Error(data.message || "failed");
+        return data;
+      });
+    });
+  }
+
+  // jsonb はキーの順番を変えるので、比較はキーを並べ替えて行う。
+  function canon(v) {
+    if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+    if (v && typeof v === "object") {
+      return "{" + Object.keys(v).sort().map(function (k) {
+        return JSON.stringify(k) + ":" + canon(v[k]);
+      }).join(",") + "}";
+    }
+    return String(JSON.stringify(v));
+  }
+
+  function union(a, b) {
+    var seen = {};
+    Object.keys(a).concat(Object.keys(b)).forEach(function (k) { seen[k] = true; });
+    return Object.keys(seen);
+  }
+
+  // p: 正答記録 / c: 問題の編集 / a: 追加した問題 / r: 消した問題。項目ごとに新しい方を残す。
+  function flatten(id) {
+    var key = BANKS[id].meta.storageKey;
+    var p = load(key).progress || {};
+    var e = load(key + "-edits");
+    var out = {};
+    Object.keys(p).forEach(function (k) { out["p:" + k] = p[k]; });
+    Object.keys(e.changed || {}).forEach(function (k) { out["c:" + k] = e.changed[k]; });
+    (e.added || []).forEach(function (q) { out["a:" + q.id] = q; });
+    (e.removed || []).forEach(function (k) { out["r:" + k] = true; });
+    return out;
+  }
+
+  function writeFlat(id, values) {
+    var key = BANKS[id].meta.storageKey;
+    var saved = load(key);
+    var p = {};
+    var e = { changed: {}, added: [], removed: [] };
+    Object.keys(values).sort().forEach(function (k) {
+      var name = k.slice(2);
+      if (k.charAt(0) === "p") p[name] = values[k];
+      else if (k.charAt(0) === "c") e.changed[name] = values[k];
+      else if (k.charAt(0) === "a") e.added.push(values[k]);
+      else if (k.charAt(0) === "r") e.removed.push(name);
+    });
+    saved.progress = p;
+    try {
+      localStorage.setItem(key, JSON.stringify(saved));
+      localStorage.setItem(key + "-edits", JSON.stringify(e));
+    } catch (err) {}
+  }
+
+  function hasUnsyncedChange(id) {
+    var shadow = load(BANKS[id].meta.storageKey + "-shadow").values || {};
+    var local = flatten(id);
+    return union(local, shadow).some(function (k) {
+      return canon(local[k]) !== canon(shadow[k]);
+    });
+  }
+
+  function adoptSynced(id) {
+    if (id !== state.bank) return;
+    progress = load(meta().storageKey).progress || {};
+    edits = loadEdits();
+    applyEdits();
+    if (state.status !== "idle") {
+      renderChrome();
+      return;
+    }
+    var current = view[state.cursor] && view[state.cursor].id;
+    view = computePool();
+    var idx = view.findIndex(function (q) { return q.id === current; });
+    if (idx !== -1) state.cursor = idx;
+    else if (state.cursor >= view.length) state.cursor = 0;
+    renderChrome();
+    renderCard();
+  }
+
+  function syncBank(id, key, attempt) {
+    return rpc("dojo_pull", { p_key: key, p_bank: id }).then(function (remote) {
+      if (state.editing && id === state.bank) {
+        syncDirty[id] = true;
+        return;
+      }
+      var doc = remote.doc || {};
+      var theirs = doc.values || {};
+      var theirStamps = doc.stamps || {};
+      var shadowKey = BANKS[id].meta.storageKey + "-shadow";
+      var shadow = load(shadowKey);
+      var base = shadow.values || {};
+      var stamps = shadow.stamps || {};
+      var local = flatten(id);
+      var now = Date.now();
+      union(local, base).forEach(function (k) {
+        if (canon(local[k]) !== canon(base[k])) stamps[k] = now;
+      });
+
+      var values = {};
+      var mergedStamps = {};
+      union(stamps, theirStamps).forEach(function (k) {
+        var mine = stamps[k] || 0;
+        var other = theirStamps[k] || 0;
+        var from = mine > other ? local : theirs;
+        mergedStamps[k] = Math.max(mine, other);
+        if (from[k] !== undefined) values[k] = from[k];
+      });
+
+      if (canon(values) !== canon(local)) {
+        writeFlat(id, values);
+        adoptSynced(id);
+      }
+      var next = { values: values, stamps: mergedStamps };
+      try {
+        localStorage.setItem(shadowKey, JSON.stringify(next));
+      } catch (e) {}
+      if (canon(next) === canon({ values: theirs, stamps: theirStamps })) return;
+
+      return rpc("dojo_push", { p_key: key, p_bank: id, p_rev: remote.rev, p_doc: next }).then(function (ok) {
+        if (ok) return;
+        if (attempt >= 3) throw new Error("conflict");
+        return syncBank(id, key, attempt + 1);
+      });
+    });
+  }
+
+  function syncSoon() {
+    if (!syncKey()) return;
+    syncDirty[state.bank] = true;
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(runSync, 800);
+  }
+
+  function syncAll() {
+    Object.keys(BANKS).forEach(function (id) { syncDirty[id] = true; });
+    runSync();
+  }
+
+  function runSync() {
+    var key = syncKey();
+    if (!key) return;
+    if (syncRunning) {
+      syncAgain = true;
+      return;
+    }
+    var ids = Object.keys(syncDirty);
+    if (!ids.length) return;
+    syncDirty = {};
+    syncRunning = true;
+    syncError = "";
+    renderSyncLabel();
+    ids.reduce(function (chain, id) {
+      return chain.then(function () { return syncBank(id, key, 1); });
+    }, Promise.resolve()).then(function () {
+      syncedAt = new Date();
+    }, function (err) {
+      ids.forEach(function (id) { syncDirty[id] = true; });
+      if (err.message === "bad_key") {
+        try {
+          localStorage.removeItem("dojo-sync-key");
+        } catch (e) {}
+        syncError = "合言葉が違います";
+      } else {
+        syncError = "同期できません（押すと再試行）";
+      }
+    }).then(function () {
+      syncRunning = false;
+      renderSyncLabel();
+      if (syncAgain) {
+        syncAgain = false;
+        runSync();
+      }
+    });
+  }
+
+  function renderSyncLabel() {
+    var label = "同期の設定";
+    if (syncError) label = syncError;
+    else if (syncRunning) label = "同期中…";
+    else if (syncKey() && syncedAt) label = "同期済み " + syncedAt.getHours() + ":" + ("0" + syncedAt.getMinutes()).slice(-2);
+    else if (syncKey()) label = "同期する";
+    document.getElementById("sync").textContent = label;
+  }
+
+  function onSyncClick() {
+    if (!syncKey()) {
+      var input = window.prompt("同期の合言葉を入れてください。");
+      if (!input) return;
+      try {
+        localStorage.setItem("dojo-sync-key", input.trim().toLowerCase());
+      } catch (e) {}
+    }
+    syncAll();
   }
 
   function statsText() {
