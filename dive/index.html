@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>大島 橙也 | Dive（試作）</title>
+  <meta name="description" content="大島橙也 — ゲーム制作・Webツール・ビジュアル。スクロールで作品をめぐる 3D 版ポートフォリオの試作。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#7cc4ef">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- 更新するときは、ここと下の importmap の ?v= を上げる（親の sw.js が JS/CSS を一度古いまま返すため）。 -->
+  <link rel="stylesheet" href="dive.css?v=1">
+  <script>
+    // 3D で旅できる環境のときだけ .dive を付ける。付かなければ、ただの作品一覧として読める。
+    (function () {
+      var root = document.documentElement;
+      var ok = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (ok) {
+        try { ok = !!document.createElement("canvas").getContext("webgl2"); } catch (e) { ok = false; }
+      }
+      root.setAttribute("data-capable", ok ? "1" : "0");
+      if (ok && location.hash !== "#list") root.classList.add("dive");
+      window.__diveFail = function () {
+        root.classList.remove("dive");
+        root.setAttribute("data-capable", "0");
+      };
+    })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three.module.min.js?r169",
+        "dive/kit": "./js/kit.js?v=1",
+        "dive/engawa": "./js/engawa.js?v=1",
+        "dive/islands": "./js/islands.js?v=1",
+        "dive/cyber": "./js/cyber.js?v=1"
+      }
+    }
+  </script>
+  <script type="module" src="js/main.js?v=1" onerror="window.__diveFail()"></script>
+</head>
+<body>
+  <canvas id="stage" aria-hidden="true"></canvas>
+  <div id="veil" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"><span></span></div>
+
+  <nav id="hud" aria-label="ページ内の移動">
+    <a class="hud-skip" href="#list">作品一覧へ</a>
+    <a class="hud-back" href="#">3D の旅に戻る</a>
+    <a class="hud-normal" href="../">通常版へ</a>
+  </nav>
+
+  <main id="journey">
+    <header class="beat hero" data-beat="hero" data-len="0.6">
+      <h1>
+        <span class="sticker name">大島 橙也 / Touya Oshima</span>
+        <span class="sticker copy">ゲームを作る。<wbr>必要な絵も描く。</span>
+      </h1>
+      <p class="scroll-cue" aria-hidden="true"><span>スクロール</span><i></i></p>
+    </header>
+
+    <div class="beat-spacer" data-beat="dive" data-len="2.5"></div>
+
+    <section class="zone" data-zone="game" aria-labelledby="z-game">
+      <header class="beat zone-head" data-beat="zone" data-len="0.8">
+        <p class="zone-no" aria-hidden="true">01</p>
+        <h2 id="z-game">Game</h2>
+      </header>
+
+      <article class="beat work" data-beat="work" data-island="kisou" data-len="1.4">
+        <div class="w-media"><img src="../assets/kisou-honnou-poster.png" alt="帰巣本能 — 青空と草地に大きなロゴ、お母さんアヒルとひなの列、遅れて追いかける1羽" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Three.js · TypeScript · Playable</span>
+          <h3>帰巣本能</h3>
+          <p>子アヒルになって、お母さんについて巣まで帰るスマホ向け 3D ミニゲーム。人混み・高速道路・洞窟・海・砂漠を越え、最後は捕まったお母さんを救うボス戦へ。遊んで気づいた不満をもとに、カメラや難易度、ボス戦を作り直しながら Claude Code と制作。</p>
+          <div class="w-links">
+            <a href="https://koyomivanp.github.io/okaasan-ni-tsuiteiku/" class="btn primary" target="_blank" rel="noopener noreferrer">ブラウザで遊ぶ →</a>
+            <a href="https://github.com/koyomivanp/okaasan-ni-tsuiteiku" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="iai" data-len="1.4">
+        <div class="w-media"><img src="../assets/iai-duel-title.jpg" alt="居合デュエル — タイトル画面（侍の影）" loading="lazy" style="object-position: center 30%;"></div>
+        <div class="w-body">
+          <span class="tag">Python · Flet · Supabase · Mobile</span>
+          <h3>居合デュエル</h3>
+          <p>刹那の見切り風の居合ゴースト対戦。合図「！」に反応して斬る反射神経ゲーム。江戸風タイトル・掲示板 UI、全国ランキング、非同期対人戦。Flet + Supabase でスマホ向けに構築。</p>
+          <div class="w-links">
+            <a href="../iai-duel/" class="btn primary">詳細を見る →</a>
+            <a href="https://github.com/koyomivanp/iai-duel" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="imomushi" data-len="1.4">
+        <div class="w-media"><img src="../assets/imomushi-hockey-screenshot.png" alt="芋虫ホッケー — 対戦画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Python · pygame-ce · Playable</span>
+          <h3>芋虫ホッケー</h3>
+          <p>這った跡が体節（壁）になる 2D エアホッケー。CPU・2P 対戦、ダッシュ貫通、森テーマ UI とシネマティック遷移。スマホのブラウザですぐ遊べます。Python 版のソースは GitHub で公開。</p>
+          <div class="w-links">
+            <a href="../imomushi-hockey/play/" class="btn primary">ブラウザで遊ぶ →</a>
+            <a href="../imomushi-hockey/" class="btn">詳細を見る →</a>
+            <a href="https://github.com/koyomivanp/imomushi-hockey" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="survival" data-len="1.1">
+        <div class="w-media"><img src="../assets/survival-screenshot.jpg" alt="サバイバル系 2D アクション — 敵に囲まれたプレイ画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Game · Playable</span>
+          <h3>サバイバル系 2D アクション</h3>
+          <p>大量の敵を自動射撃でなぎ倒すサバイバルアクション。Java（Swing）で制作し、ポートフォリオ用に Canvas 版のブラウザデモも公開しています。ブラウザですぐ遊べます。</p>
+          <div class="w-links">
+            <a href="../vampiresurvivors/index.html" class="btn primary">Web デモをプレイ →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="othello" data-len="1.1">
+        <div class="w-media"><img src="../assets/moji-othello-screenshot.png" alt="文字オセロ — プレイ画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Godot 4.6 · Playable</span>
+          <h3>文字オセロ</h3>
+          <p>6×6 盤にひらがなを置き、横・縦の2〜4文字の語を作って相手の駒を反転。オセロ × もじぴったん風ルールを Godot で実装。2人対戦・CPU対戦に対応。</p>
+          <div class="w-links">
+            <a href="https://github.com/koyomivanp/moji-othello" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="kiewado" data-len="1.1">
+        <div class="w-media"><img src="../assets/kiewado-screenshot.png" alt="キエワード — プレイ画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Godot 4 · Prototype</span>
+          <h3>キエワード</h3>
+          <p>3×3 の木製ボードで寿命付きひらがなを交互に配置。実在語の3連ラインとマス所有権で即勝利する、1対1の超速ワードボドゲ。モバイル向け UI と CPU AI を検証中。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="zone" data-zone="tools" aria-labelledby="z-tools">
+      <header class="beat zone-head" data-beat="zone" data-len="0.8">
+        <p class="zone-no" aria-hidden="true">02</p>
+        <h2 id="z-tools">Tools</h2>
+      </header>
+
+      <article class="beat work" data-beat="work" data-island="kaikei" data-len="1.2">
+        <div class="w-media"><img src="../assets/kaikei-thumb.jpg" alt="部活会計 — 参加者と車を選び、支出を入力する画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Web · React · Claude API</span>
+          <h3>部活会計</h3>
+          <p>部活の立て替え・割り勘・精算を自動で計算する会計係向けアプリ。車ごとに運転手を除いて割るなど部の実際のルールを組み込み、LINE のメッセージを AI で支出に分けて取り込める。サーバーなしでブラウザ完結、後輩への引き継ぎまで想定。</p>
+          <div class="w-links">
+            <a href="../kaikei/" class="btn primary">詳細を見る →</a>
+            <a href="https://koyomivanp.github.io/bukatsu-kaikei/" class="btn" target="_blank" rel="noopener noreferrer">アプリを開く →</a>
+            <a href="https://github.com/koyomivanp/bukatsu-kaikei" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="splatoon" data-len="1.2">
+        <div class="w-media"><img src="../assets/splatoon-ranking-screenshot.png" alt="スプラ最強武器ランキング — トップページ" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Dev · Data · Live</span>
+          <h3>スプラ最強武器ランキング</h3>
+          <p>stat.ink から勝率データを自動取得し、Python で静的サイトを生成。GitHub Actions による日次更新、武器別ページ、診断・X マッチ境界値など。データの取得から公開までを自動化しています。</p>
+          <div class="w-links">
+            <a href="https://splatoon-ranking.netlify.app/" class="btn primary" target="_blank" rel="noopener noreferrer">Live Site →</a>
+            <a href="https://github.com/koyomivanp/splatoon-ranking" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="photopdf" data-len="1.1">
+        <div class="w-media"><img src="../assets/photo-pdf-screenshot.jpg" alt="写真PDF — 写真を並べて順番を変える画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Web · Expo</span>
+          <h3>写真PDF</h3>
+          <p>カメラロールの写真を A4 PDF にまとめるツール。Web 版（ブラウザ完結）と Expo モバイル版の両方を実装。並べ替え・端末保存・共有に対応。</p>
+          <div class="w-links">
+            <a href="../photo-pdf/" class="btn primary">Web 版を試す →</a>
+            <a href="https://github.com/koyomivanp/photo-to-pdf" class="btn" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="mdpdf" data-len="1.1">
+        <div class="w-media"><img src="../assets/md-pdf-screenshot.jpg" alt="Markdown → PDF — エディタとプレビューの画面" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Web · Utility</span>
+          <h3>Markdown → PDF</h3>
+          <p>Markdown をブラウザ上で PDF に変換するシンプルな Web ツール。クライアント完結で、原稿執筆から出力までを一画面で完結。</p>
+          <div class="w-links">
+            <a href="https://md-pdf-maker.netlify.app/" class="btn" target="_blank" rel="noopener noreferrer">Live Site →</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="zone" data-zone="art" aria-labelledby="z-art">
+      <header class="beat zone-head" data-beat="zone" data-len="0.8">
+        <p class="zone-no" aria-hidden="true">03</p>
+        <h2 id="z-art">Art / Story</h2>
+      </header>
+
+      <article class="beat work" data-beat="work" data-island="kinosei" data-len="1.1">
+        <div class="w-media"><img src="../assets/kinosei-poster.png" alt="きのせい — タイトルと、傷の入った年輪" loading="lazy"></div>
+        <div class="w-body">
+          <span class="tag">Short Story · 期間限定公開</span>
+          <h3>きのせい</h3>
+          <p>悩みの種が心で発芽すると、人は木になる。制作中の 3D アクションゲームの原案として書いた短編。設定は自分で考え、本文は Claude が執筆。感想を集めるため、期間限定で公開しています。</p>
+          <div class="w-links">
+            <a href="https://claude.ai/artifact/8s3dnupmCnthfTGU7mSjWk" class="btn primary" target="_blank" rel="noopener noreferrer">読む →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="art" data-len="1.2">
+        <div class="w-media art-trio">
+          <img src="../etna.jpg" alt="『ディスガイア』シリーズのエトナのファンアート" loading="lazy" style="object-position: center 22%;">
+          <img src="../feri.jpg" alt="キャラクターイラスト1" loading="lazy" style="object-position: 72% center;">
+          <img src="../pel.jpg" alt="キャラクターイラスト2" loading="lazy">
+        </div>
+        <div class="w-body">
+          <span class="tag">Visual</span>
+          <h3>キャラクター・2D イラスト</h3>
+          <p>ゲーム向けキャラクターデザインとセルシェーディング的な陰影表現。タイトルやUIにも活かせるビジュアル制作。『ディスガイア』のエトナなど、ファンアートも含みます。イラストの投稿は pixiv でも公開しています。</p>
+          <div class="w-links">
+            <a href="../artwork.html" class="btn">ギャラリーを見る →</a>
+            <a href="https://www.pixiv.net/users/55574377" class="btn" target="_blank" rel="noopener noreferrer">pixiv →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="beat work" data-beat="work" data-island="pencase" data-len="1.0">
+        <div class="w-media stat-media"><div><strong>38</strong><span>名への調査</span></div></div>
+        <div class="w-body">
+          <span class="tag">UX · Research</span>
+          <h3>次世代ペンケース 製品企画</h3>
+          <p>38名への調査から潜在ニーズを特定。容量・質感などユーザー視点のデータをもとに、機能美を追求したプロダクト企画を策定。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="beat contact" data-beat="contact" data-len="1.7" aria-labelledby="contact-title">
+      <p class="label" aria-hidden="true">Contact</p>
+      <h2 id="contact-title">お問い合わせ</h2>
+      <p>制作のご相談、コラボレーション、ポートフォリオに関するお問い合わせはこちらまで。</p>
+      <div class="social">
+        <a href="https://github.com/koyomivanp" class="btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.pixiv.net/users/55574377" class="btn" target="_blank" rel="noopener noreferrer">pixiv</a>
+      </div>
+      <div class="mail">tochatarou@gmail.com</div>
+      <a href="mailto:tochatarou@gmail.com" class="btn primary">メールを送る</a>
+    </section>
+
+    <footer class="beat end" data-beat="end" data-len="1.5">
+      <p class="owari">おわり</p>
+      <div class="end-links">
+        <a href="#" class="btn primary" id="to-top">トップへ戻る</a>
+        <a href="../" class="btn">通常版を見る</a>
+      </div>
+      <p class="copyright">&copy; 2026 Touya Oshima</p>
+    </footer>
+  </main>
+
+  <div id="spacer" aria-hidden="true"></div>
+</body>
+</html>
