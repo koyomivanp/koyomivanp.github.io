@@ -560,6 +560,12 @@
     }
 
     if (q.explain) {
+      if (q.model) {
+        var explainHeading = document.createElement("p");
+        explainHeading.className = "explain";
+        explainHeading.textContent = "解説";
+        box.appendChild(explainHeading);
+      }
       var explain = document.createElement("p");
       explain.className = "explain";
       explain.textContent = q.explain;
