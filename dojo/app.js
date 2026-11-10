@@ -253,6 +253,7 @@
 
     var scope = document.getElementById("scope");
     scope.innerHTML = "";
+    scope.style.display = meta().files.length ? "" : "none";
     meta().files.forEach(function (name) {
       var li = document.createElement("li");
       li.textContent = name;
@@ -380,7 +381,7 @@
     restore.style.display = edits.removed.length ? "" : "none";
 
     document.getElementById("foot").textContent =
-      "更新 " + meta().updated + " · 全" + qs().length + "問 · 出典は上のファイル。答えを見ると×。紙に書けていれば「書けていた」で○。Enter は、見る前なら答え、見た後なら次へ。";
+      "更新 " + meta().updated + " · 全" + qs().length + "問 · " + (meta().files.length ? "出典は上のファイル。" : "") + "答えを見ると×。紙に書けていれば「書けていた」で○。Enter は、見る前なら答え、見た後なら次へ。";
   }
 
   function tally(chapter) {
