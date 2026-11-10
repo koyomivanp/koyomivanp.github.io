@@ -472,6 +472,10 @@ section {
   box-shadow: var(--shadow);
 }
 
+/* 画像なしの細い帯。一列ぶん使う */
+.project-card.compact { grid-column: 1 / -1; }
+.project-card.compact .card-body { padding: 16px 22px; }
+
 .card-thumb {
   min-height: 180px;
   position: relative;

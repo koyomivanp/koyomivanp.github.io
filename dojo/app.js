@@ -4,6 +4,12 @@
     public: { meta: PUBLIC_META, questions: PUBLIC_QUESTIONS }
   };
   var KIND_LABEL = { blank: "穴埋め", calc: "計算", essay: "論述" };
+  var PRIORITIES = [
+    ["all", "優先度すべて"],
+    ["must", "最優先"],
+    ["mid", "余裕があれば"],
+    ["skip", "飛ばしてよい"]
+  ];
   var MODES = [
     ["order", "順番"],
     ["random", "ランダム"],
@@ -28,6 +34,7 @@
     bank: bankId,
     chapter: saved.ui && saved.ui.chapter != null ? saved.ui.chapter : BANKS[bankId].meta.defaultChapter,
     kind: saved.ui && saved.ui.kind ? saved.ui.kind : "all",
+    priority: saved.ui && saved.ui.priority ? saved.ui.priority : "all",
     mode: saved.ui && saved.ui.mode ? saved.ui.mode : "order",
     cursor: saved.ui && saved.ui.cursor ? saved.ui.cursor : 0,
     order: saved.ui && saved.ui.order ? saved.ui.order : null,
@@ -53,6 +60,7 @@
     '</header>' +
     '<div class="filters" id="chapters"></div>' +
     '<div class="filters" id="kinds"></div>' +
+    '<div class="filters" id="priorities"></div>' +
     '<div class="filters" id="modes"></div>' +
     '<main class="card" id="card"></main>' +
     '<div class="side">' +
@@ -86,6 +94,16 @@
   function meta() { return BANKS[state.bank].meta; }
   function qs() { return merged; }
   function qKind(q) { return q.kind || "blank"; }
+  function qPriority(q) {
+    var p = meta().priority;
+    if (!p) return "mid";
+    if (p.must.indexOf(q.id) !== -1) return "must";
+    if (p.skip.indexOf(q.id) !== -1) return "skip";
+    return "mid";
+  }
+  function matchesPriority(q) {
+    return !meta().priority || state.priority === "all" || qPriority(q) === state.priority;
+  }
 
   function load(key) {
     try {
@@ -122,6 +140,7 @@
         ui: {
           chapter: state.chapter,
           kind: state.kind,
+          priority: state.priority,
           mode: state.mode,
           cursor: state.cursor,
           order: state.order
@@ -141,6 +160,7 @@
     applyEdits();
     state.chapter = next.ui && next.ui.chapter != null ? next.ui.chapter : meta().defaultChapter;
     state.kind = next.ui && next.ui.kind ? next.ui.kind : "all";
+    state.priority = next.ui && next.ui.priority ? next.ui.priority : "all";
     state.mode = next.ui && next.ui.mode ? next.ui.mode : "order";
     state.cursor = next.ui && next.ui.cursor ? next.ui.cursor : 0;
     state.order = next.ui && next.ui.order ? next.ui.order : null;
@@ -159,6 +179,7 @@
     var list = qs().filter(function (q) {
       if (state.chapter !== 0 && q.chapter !== state.chapter) return false;
       if (state.kind !== "all" && qKind(q) !== state.kind) return false;
+      if (!matchesPriority(q)) return false;
       return true;
     });
     if (state.mode === "wrong") {
@@ -270,7 +291,7 @@
       [["all", "形式すべて"]].concat(present.map(function (k) { return [k, KIND_LABEL[k] || k]; })).forEach(function (pair) {
         var count = qs().filter(function (q) {
           if (state.chapter !== 0 && q.chapter !== state.chapter) return false;
-          return pair[0] === "all" || qKind(q) === pair[0];
+          return matchesPriority(q) && (pair[0] === "all" || qKind(q) === pair[0]);
         }).length;
         var btn = document.createElement("button");
         btn.type = "button";
@@ -283,6 +304,30 @@
           rebuild();
         });
         kinds.appendChild(btn);
+      });
+    }
+
+    var priorities = document.getElementById("priorities");
+    priorities.innerHTML = "";
+    priorities.style.display = meta().priority ? "" : "none";
+    if (meta().priority) {
+      PRIORITIES.forEach(function (pair) {
+        var count = qs().filter(function (q) {
+          if (state.chapter !== 0 && q.chapter !== state.chapter) return false;
+          if (state.kind !== "all" && qKind(q) !== state.kind) return false;
+          return pair[0] === "all" || qPriority(q) === pair[0];
+        }).length;
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = state.priority === pair[0] ? "on" : "";
+        btn.innerHTML = pair[1] + "<small>" + count + "問</small>";
+        btn.addEventListener("click", function () {
+          state.priority = pair[0];
+          state.cursor = 0;
+          state.order = null;
+          rebuild();
+        });
+        priorities.appendChild(btn);
       });
     }
 
@@ -314,6 +359,7 @@
       btn.addEventListener("click", function () {
         state.chapter = q.chapter;
         state.kind = "all";
+        state.priority = "all";
         state.mode = "order";
         state.order = null;
         view = computePool();
@@ -753,6 +799,7 @@
     if (idx === -1) {
       state.chapter = qs().filter(function (item) { return item.id === id; })[0].chapter;
       state.kind = "all";
+      state.priority = "all";
       state.mode = "order";
       state.order = null;
       view = computePool();
