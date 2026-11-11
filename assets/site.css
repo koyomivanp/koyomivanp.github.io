@@ -250,6 +250,10 @@ nav .nav-cta:hover {
   display: block;
 }
 
+/* 横長の絵（ゲームのタイトル画像など）を入れるとき */
+.art-frame.wide { aspect-ratio: 16 / 9; }
+.art-frame.wide img { object-position: center; }
+
 .art-frame::after {
   content: "";
   position: absolute;
@@ -679,6 +683,8 @@ footer .footer-links a:hover { color: var(--p5-red); }
     margin: 0 auto;
     max-width: 340px;
   }
+  .art-frame.wide { max-width: 560px; }
+  .float-badge { top: -18px; }
 
   .about-grid { grid-template-columns: 1fr; }
   .about-photo { width: 110px; }
