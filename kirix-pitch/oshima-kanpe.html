@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>大島｜まとめカンペ（約1分）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a222c;
+      --ink: #f2efe8;
+      --muted: #a8b0ba;
+      --accent: #e8a54b;
+      --line: rgba(242, 239, 232, 0.12);
+      --ok: #7dcea0;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(232, 165, 75, 0.16), transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, rgba(90, 140, 180, 0.14), transparent 50%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(720px, 100%);
+      margin: 0 auto;
+      padding: 20px 16px 64px;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-family: "Shippori Mincho", serif;
+      font-size: clamp(1.4rem, 4.5vw, 1.85rem);
+      line-height: 1.35;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .timer-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 0 12px;
+      background: linear-gradient(to bottom, rgba(15, 20, 25, 0.96), rgba(15, 20, 25, 0.88));
+      backdrop-filter: blur(8px);
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .chip.ghost {
+      opacity: 0.85;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    .keyword-board {
+      text-align: center;
+      padding: 8px 4px 4px;
+    }
+
+    .keyword-board .main {
+      font-family: "Shippori Mincho", serif;
+      font-size: clamp(1.55rem, 6vw, 2.1rem);
+      font-weight: 700;
+      line-height: 1.4;
+      margin: 8px 0 14px;
+    }
+
+    .keyword-board .main em {
+      font-style: normal;
+      color: var(--accent);
+      border-bottom: 3px solid rgba(232, 165, 75, 0.55);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .script {
+      font-size: 1.05rem;
+      line-height: 1.85;
+    }
+
+    .script p {
+      margin: 0 0 1em;
+    }
+
+    .script p:last-child {
+      margin-bottom: 0;
+    }
+
+    .beat {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--ok);
+      border: 1px solid rgba(125, 206, 160, 0.35);
+      border-radius: 6px;
+      padding: 2px 7px;
+      margin-right: 6px;
+      vertical-align: middle;
+      transform: translateY(-1px);
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .pause {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.15em;
+    }
+
+    li + li { margin-top: 0.45em; }
+
+    .slide-copy {
+      white-space: pre-wrap;
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 0.95rem;
+      background: #12171e;
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px dashed rgba(232, 165, 75, 0.35);
+      color: #e7e2d8;
+    }
+
+    .alt details {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    .alt summary {
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    @media (min-width: 640px) {
+      .script { font-size: 1.12rem; }
+      section { padding: 22px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">KIRIX PITCH · SECTION 11</div>
+      <h1>大島｜まとめカンペ（約1分）</h1>
+      <p class="meta">キーワードを残し、最後は未来で締める。スマホを伏せ気味に読める長さ。</p>
+    </header>
+
+    <div class="timer-bar" aria-label="練習タイマー">
+      <button class="chip" id="startBtn" type="button">▶ 1分タイマー</button>
+      <button class="chip ghost" id="resetBtn" type="button">リセット</button>
+      <span class="chip active" id="clock" aria-live="polite">60</span>
+    </div>
+
+    <section class="keyword-board" aria-label="スライドに残すキーワード">
+      <h2>スライドに残す言葉（推奨）</h2>
+      <p class="main">クルマは、<br><em>持つものから、そばにあるものへ。</em></p>
+      <div class="tags">
+        <span class="tag">すぐ乗れる</span>
+        <span class="tag">三者に届く</span>
+        <span class="tag">一台から未来へ</span>
+      </div>
+    </section>
+
+    <section aria-label="話す順番">
+      <h2>話す順番（1分の設計）</h2>
+      <ul>
+        <li><strong>0〜15秒</strong>：一言で回収（何の提案か）</li>
+        <li><strong>15〜35秒</strong>：キーワード宣言（スライドの太字を指す）</li>
+        <li><strong>35〜55秒</strong>：未来を語る（1台→数十棟→卒業後の一台）</li>
+        <li><strong>55〜60秒</strong>：決め台詞 → お礼</li>
+      </ul>
+    </section>
+
+    <section aria-label="本番カンペ">
+      <h2>本番カンペ（読み上げ用）</h2>
+      <div class="script">
+        <p>
+          <span class="beat">0:00</span>
+          ここまでを、一言で。<br>
+          提案は——<span class="highlight">学生マンションに、クルマを置く。</span><br>
+          安く、24時間、すぐ乗れる。<br>
+          キリックス、オーナー、学生——<span class="highlight">三者に届く</span>仕組みです。
+        </p>
+        <p>
+          <span class="beat">0:20</span>
+          このサービスを通じて、私たちが描くのは——<br>
+          <span class="highlight">クルマは、持つものから、そばにあるものへ。</span>
+        </p>
+        <p class="pause">（一拍おく。スライドのキーワードを見る）</p>
+        <p>
+          <span class="beat">0:35</span>
+          いまは一台から。でもその一台が、ナジックと組んで数十棟へ広がり、<br>
+          在学中にキリックスと出会った学生が、<span class="highlight">卒業後に最初の一台を選ぶ</span>——<br>
+          そんな未来が、ここから始まります。
+        </p>
+        <p>
+          <span class="beat">0:52</span>
+          動けない理由を、消す。<br>
+          その一歩を、キリックスから。<br>
+          ご清聴ありがとうございました。
+        </p>
+      </div>
+    </section>
+
+    <section aria-label="スライド原稿">
+      <h2>スライドにそのまま置ける文</h2>
+      <pre class="slide-copy">まとめ
+
+クルマは、持つものから、そばにあるものへ。
+
+・すぐ乗れるモビリティ
+・キリックス × オーナー × 学生
+・一台から、卒業後の一台へ</pre>
+      <div class="alt">
+        <details>
+          <summary>短く言い切る版（時間が押したとき）</summary>
+          <div class="script" style="margin-top:12px">
+            <p>
+              まとめます。クルマは、<span class="highlight">持つものから、そばにあるものへ。</span><br>
+              一台から始めて、卒業後の最初の一台までつながる。<br>
+              動けない理由を、消す。キリックスから。<br>
+              ご清聴ありがとうございました。
+            </p>
+          </div>
+        </details>
+        <details open>
+          <summary>提案の一言（差し替え用）</summary>
+          <ul style="margin-top:12px">
+            <li><strong>学生マンションに、クルマを置く。</strong>（推奨・いちばん簡潔）</li>
+            <li>クルマを、学生のそばに。</li>
+            <li>敷地内に、一台置く。</li>
+            <li>住む場所に、乗るクルマを。</li>
+          </ul>
+        </details>
+        <details>
+          <summary>かっこいい言い回し候補</summary>
+          <ul style="margin-top:12px">
+            <li><strong>クルマは、持つものから、そばにあるものへ。</strong>（推奨・概念が一番かっこいい）</li>
+            <li><strong>動けない理由を、消す。</strong>（短くて刺さる・決め台詞向き）</li>
+            <li>「そばにクルマがある」が当たり前の世の中へ。</li>
+            <li>「持たない」が、不利にならない世の中へ。</li>
+            <li>足もとから、遠くへ。</li>
+            <li>「持たない自由」を、本当の自由に。</li>
+            <li>所有から、すぐ乗れるへ。</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section aria-label="話し方メモ">
+      <h2>印象に残すためのコツ</h2>
+      <ul>
+        <li>キーワードは<strong>ゆっくり・はっきり</strong>。その直前で一拍止める。</li>
+        <li>「卒業後に最初の一台を選ぶ」で視線を審査員側へ。</li>
+        <li>最後の「キリックスから。」は小さく笑わず、言い切ってからお辞儀。</li>
+        <li>数字の再説明はしない（孟さんの市場規模と被らないように）。</li>
+      </ul>
+    </section>
+
+    <footer>
+      発表用プライベートメモ · noindex
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var clock = document.getElementById("clock");
+      var startBtn = document.getElementById("startBtn");
+      var resetBtn = document.getElementById("resetBtn");
+      var left = 60;
+      var timer = null;
+
+      function render() {
+        clock.textContent = String(left);
+        clock.classList.toggle("active", left <= 10 || left === 60);
+      }
+
+      function stop() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+        startBtn.textContent = "▶ 1分タイマー";
+      }
+
+      function tick() {
+        left -= 1;
+        render();
+        if (left <= 0) {
+          stop();
+          clock.textContent = "0";
+        }
+      }
+
+      startBtn.addEventListener("click", function () {
+        if (timer) {
+          stop();
+          return;
+        }
+        if (left <= 0) left = 60;
+        render();
+        startBtn.textContent = "⏸ 一時停止";
+        timer = setInterval(tick, 1000);
+      });
+
+      resetBtn.addEventListener("click", function () {
+        stop();
+        left = 60;
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
