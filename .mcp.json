@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "sozai": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/kanaworksai-hue/sozai-search-mcp",
+        "sozai"
+      ],
+      "env": {}
+    }
+  }
+}

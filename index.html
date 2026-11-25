@@ -98,7 +98,7 @@
             <div class="pillar build">
               <div class="icon">⚙</div>
               <h4>Build</h4>
-              <p>Unity / Godot / Python / Expo。ゲームロジックから stat.ink 連携の Web サイト、PDF ツールまで。</p>
+              <p>Unity / Godot / Python / Expo。ゲームロジックから戦績の自動集計、PDF ツールまで。</p>
             </div>
             <div class="pillar draw">
               <div class="icon">✦</div>
@@ -173,30 +173,17 @@
         </article>
 
         <article class="project-card featured reveal">
-          <div class="card-thumb thumb-web-splatoon thumb-screenshot">
-            <img src="assets/splatoon-ranking-screenshot.png" alt="スプラ最強武器ランキング — トップページ" loading="lazy">
+          <div class="card-thumb thumb-screenshot">
+            <img src="assets/xmatch-top.jpg" alt="Xマッチ戦績 — ルールごとの現在のXパワーと、得意・苦手なステージ" loading="lazy" style="object-fit: cover; object-position: top center;">
           </div>
           <div class="card-body">
-            <span class="tag web">Dev · Data · Live</span>
-            <h3>スプラ最強武器ランキング</h3>
-            <p>stat.ink から勝率データを自動取得し、Python で静的サイトを生成。GitHub Actions による日次更新、武器別ページ、診断・X マッチ境界値など。データの取得から公開までを自動化しています。</p>
-            <div class="card-links">
-              <a href="https://splatoon-ranking.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Live Site →</a>
-              <a href="https://github.com/koyomivanp/splatoon-ranking" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card featured reveal">
-          <div class="card-thumb thumb-web-splatoon thumb-screenshot">
-            <img src="assets/xmatch-senseki-screenshot.jpg" alt="Xマッチ戦績 — 4ルールの現在のXパワーと計測中の勝ち負け" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="tag web">Python · s3s · Data · Daily</span>
+            <span class="tag web">Python · s3s · Data · Live</span>
             <h3>Xマッチ戦績</h3>
-            <p>スプラトゥーン3の自分の X マッチを毎日自動で取り込み、ルール×ステージ×ブキの組み合わせ別に勝率を出す戦績ページ。試合ごとの手入力をなくすため、s3s でイカリング3から取得し、Windows のタスクで毎朝取り込み。同じ試合に出た 7 人のブキの出現率と勝率も集計。</p>
+            <p>スプラトゥーン3の X マッチの戦績を s3s で毎日自動取り込みし、1枚のページにまとめるツール。XP の推移、ルール×ステージの得意・苦手、味方と相手のブキ別の勝率まで。イカリングの 50 試合の上限を超えて記録が溜まる。一般のプレイヤー向けの導入ガイドつき。</p>
             <div class="card-links">
-              <a href="xmatch/" class="btn btn-primary">戦績を見る →</a>
+              <a href="xmatch/guide/" class="btn btn-primary">詳細・使い方 →</a>
+              <a href="xmatch/" class="btn btn-ghost">作者の戦績を見る →</a>
+              <a href="https://github.com/koyomivanp/xmatch-senseki" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
             </div>
           </div>
         </article>
@@ -372,7 +359,7 @@
         <a href="#" data-pixiv target="_blank" rel="noopener noreferrer">pixiv</a>
         <a href="kaikei/">部活会計</a>
         <a href="photo-pdf/">写真PDF</a>
-        <a href="https://splatoon-ranking.netlify.app/" target="_blank" rel="noopener noreferrer">Splatoon Ranking</a>
+        <a href="xmatch/guide/">Xマッチ戦績</a>
         <a href="artwork.html">Art Gallery</a>
       </div>
       &copy; 2026 Touya Oshima · <a href="dojo/" style="color: inherit; text-decoration: none;">dojo</a> · <a href="xmatch/" style="color: inherit; text-decoration: none;">xmatch</a>

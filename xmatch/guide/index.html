@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xマッチ戦績 | Touya Oshima</title>
+  <meta name="description" content="スプラトゥーン3のXマッチ戦績を、s3s で書き出して1枚のページにまとめるツール。自分の戦績で作るための手順も載せています。">
+  <meta property="og:title" content="Xマッチ戦績 | Touya Oshima">
+  <meta property="og:description" content="イカリング3の戦績を毎日取り込み、XP推移・ルール×ステージの得意不得意・味方と相手のブキまで1枚にまとめる。自分の戦績で作る手順つき。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://koyomivanp.github.io/xmatch/guide/">
+  <meta property="og:image" content="https://koyomivanp.github.io/assets/xmatch-top.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦑</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <style>
+    .work-page { max-width: 980px; margin: 0 auto; padding: 96px 20px 64px; }
+    .work-page .back { display: inline-block; margin-bottom: 24px; color: var(--muted); text-decoration: none; font-size: 0.92rem; }
+    .work-page .back:hover { color: var(--p5-red); }
+    .work-hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3rem); letter-spacing: 0.04em; margin-bottom: 12px; }
+    .work-hero p { color: var(--muted); max-width: 720px; margin-bottom: 20px; }
+    .work-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .work-actions .note { color: var(--muted); font-size: 0.85rem; }
+    figure.shot { margin: 32px 0; }
+    figure.shot img { width: 100%; height: auto; display: block; border: 2px solid #000; box-shadow: var(--shadow); background: #15112b; }
+    figure.shot figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+    .shot-phone { display: grid; grid-template-columns: 1.7fr 1fr; gap: 18px; align-items: start; margin: 32px 0; }
+    .shot-phone .stack { display: grid; gap: 18px; }
+    .shot-phone figure.shot { margin: 0; }
+    .shot-phone figure.phone img { max-width: 300px; margin: 0 auto; }
+    .info-box { background: var(--surface); border: 2px solid var(--line); padding: 24px; margin: 28px 0; box-shadow: var(--shadow); }
+    .info-box h2 { font-family: var(--font-en); letter-spacing: 0.08em; font-size: 1.4rem; margin-bottom: 12px; color: var(--p5-red); }
+    .info-box > p { color: var(--muted); margin-bottom: 12px; }
+    .info-box ul { margin-left: 1.2rem; color: var(--muted); }
+    .info-box li { margin-bottom: 8px; }
+    .info-box li strong { color: var(--text); }
+    .points { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .points section { background: var(--surface2); border: 1px solid var(--line); padding: 16px; }
+    .points h3 { font-size: 0.98rem; margin-bottom: 8px; color: var(--text); }
+    .points p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ガイド */
+    .caution { border-left: 6px solid var(--p5-red); }
+    ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+    ol.steps > li { counter-increment: step; position: relative; padding: 0 0 22px 52px; color: var(--muted); }
+    ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: -2px; width: 36px; height: 36px; display: grid; place-items: center;
+      background: var(--p5-red); color: #fff; font-family: var(--font-en); font-size: 1.1rem; }
+    ol.steps h3 { color: var(--text); font-size: 1.02rem; margin-bottom: 6px; }
+    ol.steps p { margin-bottom: 8px; }
+    pre { background: #111; color: #f1f1f1; border: 1px solid var(--line); padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; margin: 6px 0 10px; }
+    pre .c { color: #8f8f8f; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    p code, li code, dd code { background: var(--surface2); border: 1px solid var(--line); padding: 0 5px; font-size: 0.85em; color: var(--text); word-break: break-all; }
+    pre code { background: none !important; border: 0 !important; padding: 0 !important; font-size: inherit !important; color: inherit !important; word-break: normal !important; }
+    .info-box a:not(.btn), .work-hero p a { color: var(--p5-red); text-decoration: underline; text-underline-offset: 2px; }
+    .os { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .os > div { min-width: 0; }
+    .os > div > b { display: block; font-size: 0.8rem; color: var(--text); margin-bottom: 2px; }
+    dl.faq dt { color: var(--text); font-weight: 700; margin-top: 12px; }
+    dl.faq dd { color: var(--muted); margin: 4px 0 0; }
+    @media (max-width: 720px) {
+      .shot-phone, .points, .os { grid-template-columns: 1fr; }
+      ol.steps > li { padding-left: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="work-page wrap">
+    <a class="back" href="../../index.html#projects">← ポートフォリオへ戻る</a>
+
+    <div class="work-hero">
+      <span class="tag web">Python · s3s · nxapi · HTML</span>
+      <h1>Xマッチ戦績</h1>
+      <p>
+        スプラトゥーン3の X マッチの戦績を毎日自動で取り込み、1枚のページにまとめるツールです。
+        イカリング3（Nintendo Switch Online アプリ）は直近 50 試合しか残らず、ルールやステージごとの勝率も見られないので、
+        <a href="https://github.com/frozenpandaman/s3s" target="_blank" rel="noopener noreferrer">s3s</a> で書き出した試合データを手元に溜めていき、
+        XP の推移、どのルール×ステージが得意か、味方と相手にどのブキがいると勝ちやすいかを見られるようにしました。
+      </p>
+      <div class="work-actions">
+        <a href="../" class="btn btn-primary">作者の戦績を見る →</a>
+        <a href="https://github.com/koyomivanp/xmatch-senseki" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">GitHub →</a>
+        <a href="#guide" class="btn btn-ghost">自分の戦績で作る ↓</a>
+      </div>
+    </div>
+
+    <figure class="shot">
+      <img src="../../assets/xmatch-top.jpg" alt="Xマッチ戦績 — ルールごとの現在のXパワー、計測中の勝ち負け、ルール×ステージの得意と苦手" width="1400" height="967">
+      <figcaption>ルールごとの現在の XP・最高・直近7日の増減と、計測中の勝ち負け。下は 5 試合以上やったルール×ステージから選んだ得意と苦手。</figcaption>
+    </figure>
+
+    <div class="shot-phone">
+      <div class="stack">
+        <figure class="shot">
+          <img src="../../assets/xmatch-combo.jpg" alt="組み合わせ別の勝率 — ルール・ステージ・ブキで分けて集計した表" width="1400" height="815" loading="lazy">
+          <figcaption>ルール・ステージ・ブキのどれで分けるかを選んで勝率と K/D を集計。期間も直近 7 日・30 日に絞れる。</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="../../assets/xmatch-recent.jpg" alt="最近の試合 — ステージ画像、自分のブキ、味方と相手のブキ、勝敗" width="1400" height="662" loading="lazy">
+          <figcaption>最近の試合。緑の枠が味方、ピンクの枠が相手のブキ。</figcaption>
+        </figure>
+      </div>
+      <figure class="shot phone">
+        <img src="../../assets/xmatch-phone.jpg" alt="スマートフォンでの表示" width="780" height="1688" loading="lazy">
+        <figcaption>スマホ幅でも崩れないように調整。</figcaption>
+      </figure>
+    </div>
+
+    <div class="info-box">
+      <h2>POINTS</h2>
+      <div class="points">
+        <section>
+          <h3>毎朝の自動取り込み</h3>
+          <p>PC のタスクで毎日 5 時に、nxapi で鍵を更新 → s3s で書き出し → X マッチだけを取り出して追記 → ページを作り直す、までを一度に行う。50 試合の上限を気にせず記録が溜まっていく。</p>
+        </section>
+        <section>
+          <h3>1 ファイルで開ける</h3>
+          <p>集計に使う項目だけに絞ったデータをページに埋め込むので、サーバーなしでダブルクリックで開ける。イカリングの画像 URL は期限つきなので、取り込みのときに画像も保存する。</p>
+        </section>
+        <section>
+          <h3>見たい切り口から作る</h3>
+          <p>「このステージのヤグラは本当に苦手なのか」「どのブキが味方にいると勝てるか」を確かめたくて、組み合わせを選んで集計する表と、7 人のブキの登場数・勝率の表を作った。</p>
+        </section>
+        <section>
+          <h3>公開しても困らない形に</h3>
+          <p>ログインの鍵はリポジトリに入れず、公開するページには試合 ID（アカウントの ID を含む）の代わりに通し番号だけを載せる。</p>
+        </section>
+      </div>
+    </div>
+
+    <div class="info-box" id="guide">
+      <h2>GUIDE — 自分の戦績で作る</h2>
+      <p>Windows・Mac・Linux の PC で動きます。コマンドを打つ画面（Windows は「ターミナル」や PowerShell、Mac は「ターミナル」）を使います。30 分ほど見ておいてください。</p>
+    </div>
+
+    <div class="info-box caution">
+      <h2>はじめに確認</h2>
+      <ul>
+        <li><strong>非公式のツールです。</strong> 任天堂のアプリが使っている仕組みを s3s・nxapi で真似して戦績を取っています。任天堂は認めておらず、過去にはイカリング3に入れなくなったアカウントの報告もあります。自己責任で使ってください。</li>
+        <li><strong>鍵の作成に外部のサーバーを使います。</strong> 任天堂の認証に必要な値を作るため、nxapi が開発者のサーバー（nxapi-znca-api）にログイン時のトークンを送ります（<a href="https://github.com/samuelthomas2774/nxapi#coral-client-authentication" target="_blank" rel="noopener noreferrer">説明</a>）。</li>
+        <li><strong>ログインで作る <code>session_token</code> はパスワードと同じです。</strong> 人に渡したり、GitHub に上げたりしないでください（<code>secrets/</code> は最初から GitHub に上がらない設定です）。</li>
+        <li><strong>イカリング3には直近 50 試合しか残りません。</strong> 1 日に 50 試合以上やる日は、取り込みを 1 日 2 回以上にしてください。</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <h2>手順</h2>
+      <ol class="steps">
+        <li>
+          <h3>必要なものを用意する</h3>
+          <ul>
+            <li>Nintendo Switch Online に加入している Nintendo アカウント（イカリング3を見られること）</li>
+            <li><a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">Python</a> 3.10 以上（Windows はインストール時に「Add python.exe to PATH」にチェック）</li>
+            <li><a href="https://nodejs.org/ja" target="_blank" rel="noopener noreferrer">Node.js</a> 20 以上（LTS 版）</li>
+            <li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">Git</a></li>
+          </ul>
+        </li>
+        <li>
+          <h3>ツールと s3s をダウンロードする</h3>
+          <p>好きな場所でターミナルを開き、次を順に打ちます。ここから先は、すべて <code>xmatch-senseki</code> フォルダの中で打ちます。</p>
+<pre><code>git clone https://github.com/koyomivanp/xmatch-senseki
+cd xmatch-senseki
+git clone https://github.com/frozenpandaman/s3s</code></pre>
+        </li>
+        <li>
+          <h3>s3s を動かす準備をする</h3>
+          <p>s3s 専用の Python 環境（venv）を作り、必要なライブラリを入れます。</p>
+          <div class="os">
+            <div><b>Windows</b>
+<pre><code>py -m venv s3s\.venv
+s3s\.venv\Scripts\pip install -r s3s\requirements.txt</code></pre></div>
+            <div><b>Mac / Linux</b>
+<pre><code>python3 -m venv s3s/.venv
+s3s/.venv/bin/pip install -r s3s/requirements.txt</code></pre></div>
+          </div>
+        </li>
+        <li>
+          <h3>nxapi を入れる</h3>
+          <p>s3s がイカリングに入るための鍵（gtoken / bulletToken）は、毎回 nxapi で作り直します。</p>
+<pre><code>mkdir nxapi
+cd nxapi
+npm init -y
+npm install nxapi
+cd ..</code></pre>
+        </li>
+        <li>
+          <h3>入っている作者の戦績を消す</h3>
+          <p><code>data/</code> と <code>app/img/</code> には見本として作者の戦績が入っています。混ざらないように最初に消します。</p>
+          <div class="os">
+            <div><b>Windows（PowerShell）</b>
+<pre><code>Remove-Item data\*.json
+Remove-Item -Recurse app\img</code></pre></div>
+            <div><b>Mac / Linux</b>
+<pre><code>rm data/*.json
+rm -rf app/img</code></pre></div>
+          </div>
+        </li>
+        <li>
+          <h3>Nintendo アカウントでログインする</h3>
+          <p>ログイン用の URL を出します。</p>
+          <div class="os">
+            <div><b>Windows</b>
+<pre><code>s3s\.venv\Scripts\python tools\login.py url</code></pre></div>
+            <div><b>Mac / Linux</b>
+<pre><code>s3s/.venv/bin/python tools/login.py url</code></pre></div>
+          </div>
+          <p>出てきた URL をブラウザで開いてログインし、アカウントを選ぶ画面の <strong>「この人にする」ボタンを右クリック →「リンクのアドレスをコピー」</strong>します（<code>npf71b963c1b7b6d119://auth#…</code> で始まる文字列）。それを <code>"</code> で囲んで次のように渡します。</p>
+          <div class="os">
+            <div><b>Windows</b>
+<pre><code>s3s\.venv\Scripts\python tools\login.py token "コピーしたリンク"</code></pre></div>
+            <div><b>Mac / Linux</b>
+<pre><code>s3s/.venv/bin/python tools/login.py token "コピーしたリンク"</code></pre></div>
+          </div>
+          <p><code>saved session_token</code> と出れば成功です。鍵は <code>secrets/session_token.txt</code> に、s3s の設定（stat.ink には送らない・日本語）は <code>s3s/config.txt</code> に保存されます。</p>
+        </li>
+        <li>
+          <h3>取り込んでページを作る</h3>
+<pre><code>python tools/daily.py   <span class="c"># Windows は py tools\daily.py</span></code></pre>
+          <p>数分かかります。<code>ok: X battles total 50</code> のように出たら完成です。<code>app/index.html</code> をダブルクリックすると、自分の戦績のページが開きます。結果は <code>logs/daily.log</code> にも残ります。</p>
+        </li>
+        <li>
+          <h3>毎日自動で取り込む</h3>
+          <p>手順 7 のコマンドを 1 日 1 回動かすだけです。PC が起きている時間に合わせてください。</p>
+          <ul>
+            <li><strong>Windows</strong> — 「タスク スケジューラ」→「基本タスクの作成」で毎日の時刻を決め、操作は「プログラムの開始」。プログラムに <code>py</code>、引数に <code>tools\daily.py</code>、開始に <code>xmatch-senseki</code> フォルダの場所を入れる。</li>
+            <li><strong>Mac / Linux</strong> — <code>crontab -e</code> で次の 1 行を足す（<code>node</code> の場所は <code>which node</code> で確認し、PATH に入れる）。</li>
+          </ul>
+<pre><code>0 5 * * * cd ~/xmatch-senseki &amp;&amp; PATH=/usr/local/bin:$PATH python3 tools/daily.py</code></pre>
+        </li>
+        <li>
+          <h3>（任意）ネットに公開する</h3>
+          <p>GitHub Pages などのリポジトリをクローンしたフォルダを環境変数 <code>XMATCH_SITE</code> に入れておくと、取り込みのたびにその中の <code>xmatch/</code> にページと画像をコピーして push します。公開するページに載るのは自分と味方・相手のブキ名、ステージ、勝敗、XP などで、プレイヤー名やアカウントの ID は載りません。</p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="info-box">
+      <h2>困ったとき</h2>
+      <dl class="faq">
+        <dt>「nxapi で鍵を更新できませんでした」と出る</dt>
+        <dd>しばらく使わないうちにログインが切れたか、Nintendo Switch Online アプリの更新で古くなった可能性があります。<code>cd nxapi</code> → <code>npm install nxapi@latest</code> で nxapi を新しくし、それでもだめなら手順 6 のログインをやり直してください。<code>node</code> が見つからない場合は Node.js が入っているか確認します。</dd>
+        <dt>「s3s の書き出しに失敗」と出る</dt>
+        <dd><code>git -C s3s pull</code> で s3s を新しくし、<code>pip install -r s3s/requirements.txt</code>（手順 3 の 2 行目）をもう一度実行してください。</dd>
+        <dt>試合が抜けている</dt>
+        <dd>イカリング3には直近 50 試合しか残らないので、取り込みの間にそれ以上やった分は取れません。取り込みの回数を増やしてください。</dd>
+        <dt>XP の推移が「まだ点が足りません」</dt>
+        <dd>XP は計測（3 勝か 3 敗）が終わるたびに変わるので、計測を 1 回終えると線が出ます。</dd>
+      </dl>
+    </div>
+
+    <div class="info-box">
+      <h2>TECH</h2>
+      <ul>
+        <li><a href="https://github.com/frozenpandaman/s3s" target="_blank" rel="noopener noreferrer">s3s</a>（イカリング3の戦績の書き出し）と <a href="https://github.com/samuelthomas2774/nxapi" target="_blank" rel="noopener noreferrer">nxapi</a>（鍵の更新）を Python から呼び出し</li>
+        <li>書き出した JSON から X マッチだけを取り出し、集計に使う項目に絞って <code>data/battles.json</code> に追記（同じ試合は ID で重ならない）</li>
+        <li>ページは素の HTML / CSS / JavaScript。グラフは SVG を自前で描画し、データはビルド時に 1 ファイルへ埋め込む</li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>
